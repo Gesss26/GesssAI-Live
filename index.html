@@ -298,14 +298,27 @@
         let betslip = [];
 
         const ALL_AVAILABLE_MARKETS = [
-            "1X", "X2", "12", "Over 1,5", "Under 3,5", 
-            "1X+Over 1,5", "X2+Over 1,5", "12+Under 4,5", 
-            "Multigol 1-3 Casa", "Multigol 1-3 Ospiti",
-            "GG", "NG", "1X+Under 3,5", "X2+Under 3,5", "12+Under 3,5", "Over 2,5"
+            "1", "X", "2", "1X", "X2", "12", "GG", "NG", 
+            "Over 1,5", "Over 2,5", "Under 2,5", "Under 3,5", "Under 4,5", 
+            "1X+Over 1,5", "X2+Over 1,5", "12+Over 1,5", 
+            "1X+Under 4,5", "X2+Under 4,5", "12+Under 4,5", 
+            "1+Under 4,5", "2+Under 4,5", 
+            "Multigol 1-4", "Multigol 2-5", 
+            "Multigol 1-3 Casa", "Multigol 1-3 Ospiti", 
+            "Multigol Over 1,5 Casa", "Multigol Over 1,5 Ospite"
         ];
 
         let activeMarketsFilter = {};
         let activeLeaguesFilter = {};
+
+        function formatRound(roundStr) {
+            if (!roundStr) return 'N/D';
+            const match = roundStr.match(/\d+/);
+            if (match) {
+                return `Giornata ${match[0]}`;
+            }
+            return roundStr.replace('Regular Season', 'Stagione Regolare');
+        }
 
         function initMarketsFilter() {
             const savedFilters = localStorage.getItem('gesssai_active_markets');
@@ -454,6 +467,7 @@
                     home: item.match.homeTeam.name,
                     away: item.match.awayTeam.name,
                     competition: item.match.competition.name,
+                    round: item.match.round, 
                     prediction: item.predictionData 
                 });
                 updateButtonState(item.match.id, true);
@@ -489,6 +503,7 @@
                     home: match.homeTeam.name,
                     away: match.awayTeam.name,
                     competition: match.competition.name,
+                    round: match.round, 
                     prediction: predData.userChoice
                 });
             });
@@ -574,6 +589,7 @@
                 currentMatchesArray = data.response.map(item => ({
                     id: item.fixture.id,
                     competition: { name: `${item.league.name} (${item.league.country})` },
+                    round: formatRound(item.league.round), 
                     utcDate: item.fixture.date,
                     status: item.fixture.status.short,
                     elapsed: item.fixture.status.elapsed,
@@ -632,22 +648,33 @@
             let won = false;
 
             switch(market.toLowerCase()) {
+                case "1": won = (homeGoals > awayGoals); break;
+                case "x": won = (homeGoals === awayGoals); break;
+                case "2": won = (awayGoals > homeGoals); break;
                 case "1x": won = (homeGoals >= awayGoals); break;
                 case "x2": won = (awayGoals >= homeGoals); break;
                 case "12": won = (homeGoals !== awayGoals); break;
                 case "over 1,5": won = (totalGoals > 1); break;
-                case "under 3,5": won = (totalGoals < 4); break;
                 case "over 2,5": won = (totalGoals > 2); break;
+                case "under 2,5": won = (totalGoals < 3); break;
+                case "under 3,5": won = (totalGoals < 4); break;
+                case "under 4,5": won = (totalGoals < 5); break;
                 case "1x+over 1,5": won = (homeGoals >= awayGoals && totalGoals > 1); break;
                 case "x2+over 1,5": won = (awayGoals >= homeGoals && totalGoals > 1); break;
+                case "12+over 1,5": won = (homeGoals !== awayGoals && totalGoals > 1); break;
+                case "1x+under 4,5": won = (homeGoals >= awayGoals && totalGoals < 5); break;
+                case "x2+under 4,5": won = (awayGoals >= homeGoals && totalGoals < 5); break;
                 case "12+under 4,5": won = (homeGoals !== awayGoals && totalGoals < 5); break;
+                case "1+under 4,5": won = (homeGoals > awayGoals && totalGoals < 5); break;
+                case "2+under 4,5": won = (awayGoals > homeGoals && totalGoals < 5); break;
+                case "multigol 1-4": won = (totalGoals >= 1 && totalGoals <= 4); break;
+                case "multigol 2-5": won = (totalGoals >= 2 && totalGoals <= 5); break;
                 case "multigol 1-3 casa": won = (homeGoals >= 1 && homeGoals <= 3); break;
                 case "multigol 1-3 ospiti": won = (awayGoals >= 1 && awayGoals <= 3); break;
+                case "multigol over 1,5 casa": won = (homeGoals > 1); break;
+                case "multigol over 1,5 ospite": won = (awayGoals > 1); break;
                 case "gg": won = (homeGoals > 0 && awayGoals > 0); break;
                 case "ng": won = (homeGoals === 0 || awayGoals === 0); break;
-                case "1x+under 3,5": won = (homeGoals >= awayGoals && totalGoals < 4); break;
-                case "x2+under 3,5": won = (awayGoals >= homeGoals && totalGoals < 4); break;
-                case "12+under 3,5": won = (homeGoals !== awayGoals && totalGoals < 4); break;
             }
             return won ? { statusType: 'won', textClass: 'text-emerald-400 font-bold', label: isFinished ? '✓ VINTO' : '• POT. VINTO' } : { statusType: 'lost', textClass: 'text-red-400 font-bold', label: isFinished ? '✗ PERSO' : '• POT. PERSO' };
         }
@@ -685,117 +712,152 @@
             document.getElementById('palinsesto-top-percent').innerText = `${topTotal > 0 ? Math.round((topWon / topTotal) * 100) : 0}%`;
         }
 
-        // ALGORITMO CORRETTO CON MATEMATICA UNIFICATA (Partite Giocate == Distribuzione Reti)
         function computeDualPredictions(match) {
             let seed = match.id || 12345;
             const random = () => { let x = Math.sin(seed++) * 10000; return x - Math.floor(x); };
-            
-            const compName = match.competition.name.toLowerCase();
-            const isNationalTeam = compName.includes("world cup") || compName.includes("mondial") || compName.includes("international") || compName.includes("friendly") || compName.includes("europei") || compName.includes("qualifications");
 
-            let homeForm, awayForm;
-            let hV, hP, hS, aV, aP, aS;
-            let homeGF, homeGS, awayGF, awayGS;
-
-            if (isNationalTeam) {
-                // NAZIONALI (Storico Lungo)
-                hV = Math.round(6 + random() * 10); 
-                hP = Math.round(3 + random() * 6); 
-                hS = Math.round(2 + random() * 5);
-                
-                aV = Math.round(5 + random() * 9); 
-                aP = Math.round(3 + random() * 6); 
-                aS = Math.round(3 + random() * 6);
-            } else {
-                // CLUB (Stagione Corrente: Volume di partite realistico ed omogeneo)
-                hV = Math.round(3 + random() * 6); 
-                hP = Math.round(2 + random() * 4); 
-                hS = Math.round(1 + random() * 4);
-                
-                aV = Math.round(2 + random() * 6); 
-                aP = Math.round(2 + random() * 4); 
-                aS = Math.round(2 + random() * 5);
+            // 1. ESTRAZIONE DELLA GIORNATA E COSTRUZIONE COERENTE DEI RECORD
+            let totalMatchesPlayed = 3; // Fallback minimo basato sui nostri test
+            if (match.round) {
+                const roundNumbers = match.round.match(/\d+/);
+                if (roundNumbers && roundNumbers[0]) {
+                    const currentRound = parseInt(roundNumbers[0], 10);
+                    if (currentRound > 1) {
+                        totalMatchesPlayed = currentRound - 1; 
+                    }
+                }
             }
 
-            // Calcolo esatto del totale partite per ciascuna squadra basandosi sul record espresso
-            const homeTotalMatches = hV + hP + hS;
-            const awayTotalMatches = aV + aP + aS;
+            // Generazione dei record realistici in base al totale delle partite giocate
+            let hV, hP, hS, aV, aP, aS;
 
-            // Forma percentuale strutturata e legata alle partite reali del record
-            homeForm = Math.round((((hV * 3) + hP) / (homeTotalMatches * 3)) * 100);
-            awayForm = Math.round((((aV * 3) + aP) / (awayTotalMatches * 3)) * 100);
+            let hWeightV = 0.3 + random() * 0.4;
+            let hWeightP = 0.1 + random() * 0.3;
+            hV = Math.round(totalMatchesPlayed * hWeightV);
+            hP = Math.round(totalMatchesPlayed * hWeightP);
+            hS = totalMatchesPlayed - hV - hP;
+            if (hS < 0) { hS = 0; hV = totalMatchesPlayed - hP; } 
 
-            // Generazione dei gol coerente con il numero esatto di partite espresse sopra
-            // Una squadra con molte vittorie (hV) segnerà più gol di quanti ne subisce
-            homeGF = Math.round(hV * (1.5 + random()) + hP * (0.8 + random() * 0.4));
-            homeGS = Math.round(hS * (1.6 + random()) + hP * (0.8 + random() * 0.4));
-            
-            awayGF = Math.round(aV * (1.4 + random()) + aP * (0.8 + random() * 0.4));
-            awayGS = Math.round(aS * (1.7 + random()) + aP * (0.8 + random() * 0.4));
+            let aWeightV = 0.3 + random() * 0.4;
+            let aWeightP = 0.1 + random() * 0.3;
+            aV = Math.round(totalMatchesPlayed * aWeightV);
+            aP = Math.round(totalMatchesPlayed * aWeightP);
+            aS = totalMatchesPlayed - aV - aP;
+            if (aS < 0) { aS = 0; aV = totalMatchesPlayed - aP; }
 
-            const formDiff = Math.abs(homeForm - awayForm);
-            const homeAvgGoals = (homeGF / homeTotalMatches).toFixed(1);
-            const awayAvgGoals = (awayGF / awayTotalMatches).toFixed(1);
-            const combinedAvgGoals = (parseFloat(homeAvgGoals) + parseFloat(awayAvgGoals)) / 2;
-            const homePoints = (hV * 3) + hP; const awayPoints = (aV * 3) + aP;
+            // Generazione gol fatti e subiti per calcolare la Differenza Reti reale
+            let homeGF = Math.round(totalMatchesPlayed * (0.8 + random() * 1.4));
+            let homeGS = Math.round(totalMatchesPlayed * (0.7 + random() * 1.3));
+            let awayGF = Math.round(totalMatchesPlayed * (0.8 + random() * 1.3));
+            let awayGS = Math.round(totalMatchesPlayed * (0.7 + random() * 1.4));
 
+            let homeDR = homeGF - homeGS;
+            let awayDR = awayGF - awayGS;
+
+            // 2. REGOLA 1: CONTROLLO DEL PAREGGIO ("X") - SOGLIA 1/3 (33.3%)
+            let totalCombinedMatches = totalMatchesPlayed + totalMatchesPlayed;
+            let totalCombinedDraws = hP + aP;
+            let drawPercentage = totalCombinedDraws / totalCombinedMatches;
+            let excludeDraws = drawPercentage < (1 / 3); // Se < 33.3% esclude tutti i pronostici con la X
+
+            // 3. REGOLA 2: ASSEGNAZIONE DEL VANTAGGIO (FORMA VS DIFFERENZA RETI)
+            // Calcolo simulato dei punti nelle ultime 5 partite (massimo 15 punti) o ridotto se totalMatchesPlayed < 5
+            let maxPuntiForma = Math.min(totalMatchesPlayed, 5) * 3;
+            if (maxPuntiForma === 0) maxPuntiForma = 15; // Evita divisioni per zero
+
+            let homeFormPoints = (Math.min(hV, 5) * 3) + Math.min(hP, 5);
+            let awayFormPoints = (Math.min(aV, 5) * 3) + Math.min(aP, 5);
+
+            let homeFormPercent = (homeFormPoints / maxPuntiForma) * 100;
+            let awayFormPercent = (awayFormPoints / maxPuntiForma) * 100;
+
+            let formDifference = Math.abs(homeFormPercent - awayFormPercent);
+            let advantageTeam = "home"; // Fallback iniziale di vantaggio alla squadra di casa
+
+            if (formDifference >= 15) {
+                // Se lo scarto è >= 15%, decide la Forma migliore
+                advantageTeam = homeFormPercent > awayFormPercent ? "home" : "away";
+            } else {
+                // Se lo scarto è < 15%, decide la Differenza Reti (Filtro 2)
+                if (homeDR !== awayDR) {
+                    advantageTeam = homeDR > awayDR ? "home" : "away";
+                } else {
+                    advantageTeam = homeFormPoints >= awayFormPoints ? "home" : "away";
+                }
+            }
+
+            // 4. GENERAZIONE E VALUTAZIONE DEI MERCATI
             let marketsEvaluation = [];
 
             ALL_AVAILABLE_MARKETS.forEach(market => {
-                let baseProb = 50 + Math.floor(random() * 35); 
-                let oddsModifier = 1.25;
-
-                if (market === "1X") {
-                    baseProb = homeForm > awayForm ? 65 + (formDiff/3) : 55 - (formDiff/4);
-                } else if (market === "X2") {
-                    baseProb = awayForm > homeForm ? 65 + (formDiff/3) : 55 - (formDiff/4);
-                } else if (market === "Over 1,5") {
-                    baseProb = combinedAvgGoals > 2.2 ? 75 + (combinedAvgGoals * 3) : 60;
-                } else if (market === "Under 3,5") {
-                    baseProb = combinedAvgGoals < 2.8 ? 78 - (combinedAvgGoals * 3) : 58;
-                } else if (market === "Over 2,5") {
-                    baseProb = combinedAvgGoals > 2.5 ? 62 + (combinedAvgGoals * 4) : 45;
-                    oddsModifier = 1.65;
-                } else if (market === "GG") {
-                    baseProb = (homeAvgGoals > 1.2 && awayAvgGoals > 1.2) ? 68 : 48;
-                    oddsModifier = 1.65;
-                } else if (market === "Multigol 1-3 Casa") {
-                    baseProb = (homeAvgGoals >= 1.0 && homeAvgGoals <= 2.2) ? 74 : 58;
-                    oddsModifier = 1.40;
-                } else if (market === "Multigol 1-3 Ospiti") {
-                    baseProb = (awayAvgGoals >= 1.0 && awayAvgGoals <= 2.2) ? 72 : 55;
-                    oddsModifier = 1.40;
-                } else if (market.includes("+")) {
-                    baseProb = 52 + Math.floor(random() * 20);
-                    oddsModifier = 1.55;
+                let mLower = market.toLowerCase();
+                
+                // Se la regola esclude il pareggio, scartiamo i mercati contenenti la X o abbassiamo drasticamente la probabilità
+                if (excludeDraws && (mLower === "x" || mLower === "1x" || mLower === "x2" || mLower.includes("1x+") || mLower.includes("x2+"))) {
+                    return; // Salta l'inserimento o non proporlo come scelta valida
                 }
 
-                baseProb = Math.min(Math.max(Math.round(baseProb), 40), 96); 
-                let calculatedOdds = parseFloat((oddsModifier + (random() * 0.2)).toFixed(2));
+                let baseProb = 50 + Math.floor(random() * 30);
+                let oddsModifier = 1.30;
+
+                // Calcolo probabilità orientato sulla base del vantaggio matematico assegnato
+                if (market === "1") {
+                    baseProb = advantageTeam === "home" ? 55 + (formDifference / 2) : 30;
+                    oddsModifier = advantageTeam === "home" ? 1.65 : 2.40;
+                } else if (market === "2") {
+                    baseProb = advantageTeam === "away" ? 55 + (formDifference / 2) : 30;
+                    oddsModifier = advantageTeam === "away" ? 1.70 : 2.50;
+                } else if (market === "1X") {
+                    baseProb = advantageTeam === "home" ? 70 : 45;
+                    oddsModifier = 1.30;
+                } else if (market === "X2") {
+                    baseProb = advantageTeam === "away" ? 70 : 45;
+                    oddsModifier = 1.35;
+                } else if (market === "12") {
+                    baseProb = excludeDraws ? 80 : 65;
+                    oddsModifier = 1.25;
+                } else if (market === "Over 1,5") {
+                    baseProb = 65 + Math.floor(random() * 20);
+                } else if (market === "Under 3,5") {
+                    baseProb = 60 + Math.floor(random() * 25);
+                }
+
+                baseProb = Math.min(Math.max(Math.round(baseProb), 15), 98);
+                let calculatedOdds = parseFloat((oddsModifier + (random() * 0.25)).toFixed(2));
 
                 marketsEvaluation.push({
                     market: market,
                     odds: calculatedOdds,
                     prob: baseProb,
                     stats: { 
-                        homeForm, awayForm, formDiff,
-                        homeWDL: `${hV}-${hP}-${hS}`, awayWDL: `${aV}-${aP}-${aS}`,
-                        homeG: `${homeGF}:${homeGS}`, awayG: `${awayGF}:${awayGS}`
+                        homeForm: Math.round(homeFormPercent), 
+                        awayForm: Math.round(awayFormPercent), 
+                        formDiff: formDifference.toFixed(1),
+                        homeWDL: `${hV}-${hP}-${hS}`, 
+                        awayWDL: `${aV}-${aP}-${aS}`,
+                        homeG: `${homeGF}:${homeGS} (${homeDR >= 0 ? '+' : ''}${homeDR})`, 
+                        awayG: `${awayGF}:${awayGS} (${awayDR >= 0 ? '+' : ''}${awayDR})`
                     }
                 });
             });
 
+            if (marketsEvaluation.length === 0) {
+                // Fallback di sicurezza se tutti i mercati principali sono stati filtrati via
+                marketsEvaluation.push({
+                    market: "12", odds: 1.30, prob: 70,
+                    stats: { homeForm: 50, awayForm: 50, formDiff: "0", homeWDL: "0-0-0", awayWDL: "0-0-0", homeG: "0:0", awayG: "0:0" }
+                });
+            }
+
+            // Ordinamento per estrarre la massima probabilità assoluta rimasta
             let absoluteTop = [...marketsEvaluation].sort((a, b) => b.prob - a.prob)[0];
             
+            // Creazione ordine priorità in linea con le regole applicate
             let priorityList = [];
-            if (isNationalTeam) {
-                priorityList = formDiff >= 15 ? ["12", "12+Under 3,5", "Over 1,5", "1X", "X2"] : ["GG", "Over 1,5", "Under 3,5", "1X", "X2"];
+            if (excludeDraws) {
+                priorityList = advantageTeam === "home" ? ["1", "12", "Over 1,5", "Multigol 1-4"] : ["2", "12", "Over 1,5", "Multigol 1-4"];
             } else {
-                if (formDiff <= 10) {
-                    priorityList = combinedAvgGoals >= 2.5 ? ["Over 2,5", "GG", "Over 1,5", "12"] : ["Under 3,5", "NG", "1X", "X2"];
-                } else {
-                    priorityList = homePoints >= awayPoints ? ["1X", "1X+Under 3,5", "1X+Over 1,5", "Over 1,5"] : ["X2", "X2+Under 3,5", "X2+Over 1,5", "Over 1,5"];
-                }
+                priorityList = advantageTeam === "home" ? ["1X", "12", "Over 1,5", "Under 3,5"] : ["X2", "12", "Over 1,5", "Under 3,5"];
             }
             ALL_AVAILABLE_MARKETS.forEach(m => { if(!priorityList.includes(m)) priorityList.push(m); });
 
@@ -803,10 +865,12 @@
             for (let i = 0; i < priorityList.length; i++) {
                 let mKey = priorityList[i].toLowerCase();
                 if (activeMarketsFilter[mKey] === true) {
-                    userChoice = marketsEvaluation.find(e => e.market === priorityList[i]);
-                    break;
+                    let found = marketsEvaluation.find(e => e.market === priorityList[i]);
+                    if (found) { userChoice = found; break; }
                 }
             }
+
+            if (!userChoice) userChoice = absoluteTop;
 
             return { userChoice, absoluteTop };
         }
@@ -847,8 +911,11 @@
                      </div>` : '';
 
                 card.innerHTML = `
-                    <div class="flex justify-between items-center text-[11px] text-gray-400">
-                        <span class="font-bold text-blue-400 uppercase truncate max-w-[180px]">${match.competition.name}</span>
+                    <div class="flex justify-between items-start text-[11px] text-gray-400">
+                        <div class="flex flex-col min-w-0 pr-2">
+                            <span class="font-bold text-blue-400 uppercase truncate max-w-[190px]">${match.competition.name}</span>
+                            <span class="text-[10px] font-mono text-gray-500 mt-0.5 font-bold">${match.round}</span>
+                        </div>
                         ${getStatusBadge(match.status, match.elapsed, match.utcDate)}
                     </div>
                     
@@ -862,7 +929,7 @@
                             <span class="text-gray-300">${(choice||topAbs).stats.homeWDL} | ${(choice||topAbs).stats.awayWDL}</span>
                         </div>
                         <div>
-                            <span class="block text-gray-500 font-sans text-[8px]">RETI F:S</span>
+                            <span class="block text-gray-500 font-sans text-[8px]">DR (F:S)</span>
                             <span class="text-blue-400/90">${(choice||topAbs).stats.homeG} | ${(choice||topAbs).stats.awayG}</span>
                         </div>
                     </div>
@@ -897,7 +964,7 @@
             else { 
                 const dual = computeDualPredictions(match);
                 if(!dual.userChoice) { alert("Nessun mercato attivo per questa partita!"); return; }
-                betslip.push({ id: match.id, home: match.homeTeam.name, away: match.awayTeam.name, competition: match.competition.name, prediction: dual.userChoice }); 
+                betslip.push({ id: match.id, home: match.homeTeam.name, away: match.awayTeam.name, competition: match.competition.name, round: match.round, prediction: dual.userChoice }); 
                 updateButtonState(matchId, true); 
             }
             renderBetslip();
@@ -939,6 +1006,7 @@
                 row.innerHTML = `
                     <div class="flex-1 min-w-0 pr-2 text-xs">
                         <div class="text-[10px] text-blue-400 font-bold uppercase truncate mb-0.5">${item.competition}</div>
+                        <div class="text-[9px] font-mono text-gray-500 mb-1 font-bold">${item.round || ''}</div>
                         <div class="font-semibold text-gray-200 truncate">${item.home} vs ${item.away}</div>
                         <div class="text-[11px] text-gray-400 mt-0.5">Pr: <span class="${res.textClass}">${item.prediction.market}</span> <span class="text-gray-500 font-mono">(${item.prediction.prob}%)</span></div>
                     </div>
@@ -969,7 +1037,7 @@
             const archive = JSON.parse(localStorage.getItem('gesssai_archive')) || [];
             
             const savedEvents = betslip.map(b => ({
-                id: b.id, home: b.home, away: b.away, competition: b.competition, market: b.prediction.market, odds: b.prediction.odds, prob: b.prediction.prob
+                id: b.id, home: b.home, away: b.away, competition: b.competition, round: b.round, market: b.prediction.market, odds: b.prediction.odds, prob: b.prediction.prob
             }));
             
             archive.push({ 
@@ -1003,8 +1071,9 @@
                 const itemRow = document.createElement('div');
                 itemRow.className = "bg-gray-900/40 p-3 rounded border border-gray-700/30 flex justify-between items-center text-xs";
                 itemRow.innerHTML = `
-                    <div class="truncate pr-2">
+                    <div class="truncate pr-2 flex-1 min-w-0">
                         <span class="text-[9px] text-blue-400 uppercase block font-bold truncate">${ev.competition}</span>
+                        <span class="text-[9px] font-mono text-gray-500 block mb-0.5 font-bold">${ev.round || ''}</span>
                         <span class="font-medium text-gray-200 block truncate">${ev.home} vs ${ev.away}</span>
                         <span class="block text-[11px] text-gray-400 mt-0.5">Consiglio: <span class="text-yellow-400 font-semibold">${ev.market}</span> <span class="text-[10px] text-gray-500 font-mono">(${ev.prob}%)</span></span>
                     </div>
