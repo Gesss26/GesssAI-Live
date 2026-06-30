@@ -224,10 +224,10 @@
         .confidence-score { font-weight: bold; font-size: 1.2em; color: #FFD700; }
         .prediction-type { background: var(--primary-color); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-top: 5px; display: inline-block; }
         
-        /* Stili per la griglia delle 17 giocate */
+        /* Stili per la griglia delle giocate */
         .bet-types-grid { 
             display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); 
+            grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); 
             gap: 10px; 
             margin-bottom: 20px; 
         }
@@ -241,7 +241,12 @@
             cursor: pointer;
             transition: all 0.2s ease;
             text-align: center;
-            font-size: 0.9em;
+            font-size: 0.85em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 50px;
         }
         .bet-type-btn:hover { border-color: var(--primary-color); color: white; }
         .bet-type-btn.selected {
@@ -249,6 +254,13 @@
             color: #000;
             border-color: #FFD700;
             box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
+        }
+        .bet-category-label {
+            font-size: 0.7em;
+            color: #87ceeb;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         @media (max-width: 768px) {
@@ -337,22 +349,22 @@
         <div id="compareResults"></div>
     </div>
 
-    <!-- TAB SCHEDINA AI (RISTRUTTURATO) -->
+    <!-- TAB SCHEDINA AI (RISTRUTTURATO COMPLETAMENTE) -->
     <div id="tab-schedina" class="tab-content">
         <div class="schedina-layout">
             
             <!-- Colonna Principale: Generatore e Lista Partite -->
             <div class="schedina-main">
                 
-                <!-- SEZIONE 1: SELEZIONE GIOCATES (MAX 2) -->
+                <!-- SEZIONE 1: SELEZIONE GIOCATES -->
                 <div class="settings-section">
                     <h3>🎯 Seleziona la Giocata (Max 2)</h3>
                     <p style="color:#87ceeb; font-size:0.9em; margin-bottom:15px;">
-                        Scegli fino a 2 tipologie di scommessa. L'AI cercherà le partite con la più alta probabilità statistica per questa combinazione.
+                        Scegli fino a 2 tipologie. L'AI cercherà le partite con la più alta probabilità statistica.
                     </p>
                     
                     <div class="bet-types-grid" id="betTypesGrid">
-                        <!-- Le 17 giocate verranno generate qui via JS -->
+                        <!-- Le giocate verranno generate qui via JS -->
                     </div>
                 </div>
 
@@ -619,15 +631,36 @@
         
         // Variabili per la nuova Schedina AI
         let selectedLeaguesForSchedina = new Set();
-        let selectedBetTypes = []; // Array per memorizzare max 2 giocate
+        let selectedBetTypes = []; // Array per memorizzare max 2 giocate/categorie
 
-        // Le 17 giocate classiche
-        const BET_TYPES_LIST = [
-            '1', 'X', '2', '1X', '12', 'X2',
-            'Over 1,5', 'Over 2,5', 'Under 3,5', 'Under 4,5',
-            'Gol', 'No Gol',
-            'MG Casa 0-1', 'MG Casa 1-3', 'MG Casa 2-4',
-            'MG Ospite 0-1', 'MG Ospite 1-3' 
+        // Definizione delle giocate e categorie
+        const BET_CATEGORIES = [
+            {
+                label: "Risultato Finale",
+                bets: ['1', 'X', '2'],
+                allLabel: "Tutte Fisse"
+            },
+            {
+                label: "Doppia Chance",
+                bets: ['1X', '12', 'X2'],
+                allLabel: "Tutte DC"
+            },
+            {
+                label: "Under/Over",
+                bets: ['Over 1,5', 'Over 2,5', 'Under 3,5', 'Under 4,5']
+            },
+            {
+                label: "Multigol Casa",
+                bets: ['MG Casa 0-1', 'MG Casa 1-3', 'MG Casa 2-4', 'MG Over 1,5 Casa']
+            },
+            {
+                label: "Multigol Ospite",
+                bets: ['MG Ospite 0-1', 'MG Ospite 1-3', 'MG Ospite 2-4', 'MG Over 1,5 Ospite']
+            },
+            {
+                label: "Multigol Totali",
+                bets: ['MG Totale 1-4', 'MG Totale 2-5']
+            }
         ];
 
         const LEAGUE_PALETTE = ['#1e90ff', '#ff6b35', '#28a745', '#ffc107', '#dc3545', '#9c27b0', '#00bcd4', '#e91e63', '#795548', '#607d8b'];
@@ -691,7 +724,7 @@
             renderAll();
             loadAllSettings();
             renderSchedina();
-            renderBetTypesGrid(); // Inizializza la griglia delle 17 giocate
+            renderBetTypesGrid(); // Inizializza la griglia delle giocate
             renderLeagueFilterSidebar(); // Inizializza la sidebar dei filtri
         });
 
@@ -1719,7 +1752,7 @@
         }
 
         // ============================================================
-        // === LOGICA SCHEDINA AI AVANZATA (17 GIOCATES + FILTRI) ===
+        // === LOGICA SCHEDINA AI AVANZATA (CATEGORIE + TUTTE) ===
         // ============================================================
 
         function renderBetTypesGrid() {
@@ -1727,9 +1760,22 @@
             if (!container) return;
             
             let html = '';
-            BET_TYPES_LIST.forEach(bet => {
-                const isSelected = selectedBetTypes.includes(bet) ? 'selected' : '';
-                html += `<div class="bet-type-btn ${isSelected}" onclick="toggleBetType('${bet}', this)">${bet}</div>`;
+            
+            BET_CATEGORIES.forEach(cat => {
+                // Aggiungi etichetta categoria
+                html += `<div style="grid-column: 1 / -1; margin-top: 10px; margin-bottom: 5px;" class="bet-category-label">${cat.label}</div>`;
+                
+                // Aggiungi pulsante "Tutte" se presente nella categoria
+                if (cat.allLabel) {
+                    const isSelected = selectedBetTypes.includes(cat.allLabel) ? 'selected' : '';
+                    html += `<div class="bet-type-btn ${isSelected}" onclick="toggleBetType('${cat.allLabel}', this)">${cat.allLabel}</div>`;
+                }
+                
+                // Aggiungi pulsanti singole giocate
+                cat.bets.forEach(bet => {
+                    const isSelected = selectedBetTypes.includes(bet) ? 'selected' : '';
+                    html += `<div class="bet-type-btn ${isSelected}" onclick="toggleBetType('${bet}', this)">${bet}</div>`;
+                });
             });
             
             container.innerHTML = html;
@@ -1907,8 +1953,32 @@
 
             // Calcola score per ogni partita in base alle giocate selezionate
             const scoredMatches = candidateMatches.map(m => {
-                const score = calculateCombinationProbability(m, selectedBetTypes);
-                return { match: m, score: score };
+                // Se l'utente ha selezionato "Tutte Fisse" o "Tutte DC", dobbiamo trovare la giocata specifica migliore
+                let effectiveBetTypes = [...selectedBetTypes];
+                let bestSpecificBet = null;
+                let highestProb = 0;
+
+                if (effectiveBetTypes.includes('Tutte Fisse')) {
+                    ['1', 'X', '2'].forEach(bet => {
+                        const p = calculateSingleBetProbability(m, bet);
+                        if (p > highestProb) { highestProb = p; bestSpecificBet = bet; }
+                    });
+                    // Rimuoviamo "Tutte Fisse" e aggiungiamo la giocata specifica migliore
+                    effectiveBetTypes = effectiveBetTypes.filter(b => b !== 'Tutte Fisse');
+                    if (bestSpecificBet) effectiveBetTypes.push(bestSpecificBet);
+                }
+
+                if (effectiveBetTypes.includes('Tutte DC')) {
+                    ['1X', '12', 'X2'].forEach(bet => {
+                        const p = calculateSingleBetProbability(m, bet);
+                        if (p > highestProb) { highestProb = p; bestSpecificBet = bet; }
+                    });
+                    effectiveBetTypes = effectiveBetTypes.filter(b => b !== 'Tutte DC');
+                    if (bestSpecificBet) effectiveBetTypes.push(bestSpecificBet);
+                }
+
+                const score = calculateCombinationProbability(m, effectiveBetTypes);
+                return { match: m, score: score, specificBet: bestSpecificBet };
             });
 
             // Ordina per score decrescente e prendi i top N
@@ -1919,11 +1989,14 @@
             const container = document.getElementById('aiPredictionsList');
             let html = '';
             
-            const betComboString = selectedBetTypes.join(' + ');
-            
             topMatches.forEach(item => {
                 const m = item.match;
                 const confidence = item.score;
+                let displayBet = selectedBetTypes.join(' + ');
+                if (item.specificBet) {
+                    displayBet = selectedBetTypes.map(b => (b === 'Tutte Fisse' || b === 'Tutte DC') ? item.specificBet : b).join(' + ');
+                }
+
                 let colorClass = confidence > 70 ? 'trend-positive' : (confidence > 50 ? 'trend-neutral' : 'trend-negative');
                 
                 html += `
@@ -1931,12 +2004,12 @@
                         <div>
                             <div style="font-weight:bold; color:white;">${m.homeTeam} vs ${m.awayTeam}</div>
                             <div style="font-size:0.8em; color:#87ceeb;">${m.league} • ${m.date}</div>
-                            <span class="prediction-type">${betComboString}</span>
+                            <span class="prediction-type">${displayBet}</span>
                         </div>
                         <div style="text-align:right;">
                             <div class="confidence-score">${confidence}%</div>
                             <div style="font-size:0.7em; color:#87ceeb;">Affidabilità</div>
-                            <button class="btn btn-success" style="padding:5px 10px; font-size:0.8em; margin-top:5px;" onclick="addBet('${m.homeTeam} vs ${m.awayTeam}', '${betComboString}', '${m.date}')">➕ Aggiungi</button>
+                            <button class="btn btn-success" style="padding:5px 10px; font-size:0.8em; margin-top:5px;" onclick="addBet('${m.homeTeam} vs ${m.awayTeam}', '${displayBet}', '${m.date}')">➕ Aggiungi</button>
                         </div>
                     </div>
                 `;
@@ -1944,6 +2017,11 @@
             
             container.innerHTML = html;
             document.getElementById('aiAnalysisSection').style.display = 'block';
+        }
+
+        // Funzione helper per calcolare la probabilità di una singola giocata
+        function calculateSingleBetProbability(match, bet) {
+            return calculateCombinationProbability(match, [bet]);
         }
 
         function addBet(mn, bt, d) {
