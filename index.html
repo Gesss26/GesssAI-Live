@@ -5,12 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GesssAI-Pro</title>
     
-    <!-- Firebase SDK Compat (v8 legacy - funziona senza moduli) -->
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
-
-    <!-- PWA Manifest & Meta Tags -->
+    <!-- PWA & Librerie Esterne -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#1e90ff">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -36,6 +31,8 @@
         .matches-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
         @media (max-width: 1200px) { .matches-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 768px) { .matches-grid { grid-template-columns: 1fr; } }
+        
+        /* Match Card Styles */
         .match-card { background: linear-gradient(135deg, #111128, #0d1b3e); border: 2px solid #1e3a5f; border-left: 5px solid var(--league-color, var(--primary-color)); border-radius: 10px; padding: 15px; cursor: pointer; transition: all 0.3s ease; display: flex; flex-direction: column; gap: 10px; }
         .match-card:hover { transform: translateY(-3px); box-shadow: 0 4px 15px rgba(30, 144, 255, 0.3); }
         .match-card.today-match { border: 3px solid #FFD700; box-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
@@ -53,6 +50,8 @@
         .match-card-center { display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 70px; gap: 5px; padding: 0 10px; }
         .match-card-result { font-size: calc(var(--font-size-base) * 1.5); font-weight: bold; color: var(--league-color, var(--primary-color)); }
         .match-card-vs { font-size: calc(var(--font-size-base) * 1.2); color: #87ceeb; font-weight: bold; }
+        
+        /* Buttons & Inputs */
         .btn { background: linear-gradient(135deg, var(--primary-color), #0066cc); border: none; color: #ffffff; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-weight: bold; margin: 5px; font-size: inherit; }
         .btn:hover { background: linear-gradient(135deg, #00bfff, var(--primary-color)); }
         .btn-secondary { background: #2d2d5e; border: 1px solid var(--primary-color); }
@@ -69,12 +68,16 @@
         .font-size-slider { display: flex; align-items: center; gap: 15px; margin: 20px 0; padding: 15px; background: #111128; border-radius: 10px; }
         .font-size-slider input[type="range"] { flex: 1; height: 8px; -webkit-appearance: none; background: #1e3a5f; border-radius: 4px; }
         .font-size-slider input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; background: var(--primary-color); border-radius: 50%; cursor: pointer; }
+        
+        /* League Order & Lists */
         .league-order-item { background: #1a1a3e; border: 1px solid #1e3a5f; border-left: 4px solid var(--league-color, var(--primary-color)); padding: 12px; border-radius: 5px; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
         .league-order-buttons { display: flex; gap: 5px; }
         .league-order-btn { background: var(--primary-color); border: none; color: #fff; width: 30px; height: 30px; border-radius: 5px; cursor: pointer; font-size: 16px; }
         .league-order-btn:disabled { background: #555; cursor: not-allowed; }
         .btn-today { position: fixed; bottom: 30px; right: 30px; z-index: 1000; background: linear-gradient(135deg, #ff6b35, #cc4400); box-shadow: 0 4px 15px rgba(255, 107, 53, 0.5); animation: pulse 2s infinite; }
         @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.05); } }
+        
+        /* Detail View */
         .match-detail-container { display: none; }
         .match-detail-container.active { display: block; }
         .match-header-detail { background: linear-gradient(135deg, #111128, #0d1b3e); border: 2px solid var(--league-color, var(--primary-color)); border-radius: 12px; padding: 25px; margin-bottom: 20px; }
@@ -90,6 +93,8 @@
         .team-name { font-size: calc(var(--font-size-base) * 1.3); font-weight: bold; }
         .team-form-detail { margin-top: 10px; display: flex; justify-content: center; gap: 4px; }
         .vs-separator { font-size: calc(var(--font-size-base) * 2); font-weight: bold; color: var(--league-color, var(--primary-color)); }
+        
+        /* Stats & Panels */
         .stats-grid-detail { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin: 20px 0; }
         .stats-panel { background: #111128; border: 1px solid #1e3a5f; border-radius: 10px; padding: 20px; }
         .stats-section { margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #1e3a5f; }
@@ -99,6 +104,8 @@
         .ai-panel { background: #111128; border: 1px solid #1e3a5f; border-radius: 10px; padding: 25px; margin-top: 20px; }
         .ai-content { color: #ffffff; line-height: 1.8; white-space: pre-wrap; min-height: 200px; font-size: inherit; }
         .export-buttons { display: flex; gap: 10px; margin-top: 15px; flex-wrap: wrap; }
+        
+        /* Form Squares & Stat Items */
         .form-square { width: 24px; height: 24px; border-radius: 4px; display: inline-flex; align-items: center; justify-content: center; font-size: calc(var(--font-size-base) * 0.8); font-weight: bold; color: #ffffff; margin: 2px; }
         .form-square.V { background: #28a745; color: #fff; }
         .form-square.D { background: #FFD700; color: #000; }
@@ -113,6 +120,8 @@
         .stat-item.added .label, .stat-item.added .value { color: #ffffff; }
         .stat-item.selected { background: #FFD700; border-color: #FFD700; box-shadow: 0 0 15px rgba(255, 215, 0, 0.6); }
         .stat-item.selected .label, .stat-item.selected .value { color: #000000; }
+        
+        /* Settings & API Sections */
         .settings-section { background: #111128; border: 1px solid #1e3a5f; border-radius: 10px; padding: 20px; margin-bottom: 20px; }
         .settings-section h3 { color: var(--primary-color); margin-bottom: 15px; border-bottom: 1px solid #1e3a5f; padding-bottom: 10px; font-size: calc(var(--font-size-base) * 1.2); }
         .settings-row { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; flex-wrap: wrap; }
@@ -124,6 +133,8 @@
         .saved-league-item { background: #1a1a3e; border: 1px solid #1e3a5f; border-left: 4px solid var(--league-color, var(--primary-color)); padding: 8px 12px; border-radius: 5px; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center; }
         .remove-btn { background: #dc3545; border: none; color: #ffffff; width: 22px; height: 22px; border-radius: 50%; cursor: pointer; }
         .api-config { background: #0d0d24; border: 1px solid #1e3a5f; border-radius: 8px; padding: 15px; margin-top: 10px; }
+        
+        /* Schedina Specific Styles */
         .schedina-buttons { display: flex; gap: 10px; justify-content: center; margin: 20px 0; flex-wrap: wrap; }
         .schedina-btn { width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--primary-color); background: #111128; color: #ffffff; font-size: calc(var(--font-size-base) * 1.4); font-weight: bold; cursor: pointer; transition: all 0.3s ease; }
         .schedina-btn:hover { background: var(--primary-color); transform: scale(1.1); }
@@ -133,6 +144,8 @@
         .schedina-item .match-info { color: #ffffff; font-weight: bold; }
         .schedina-item .bet-info { color: #FFD700; font-weight: bold; }
         .schedina-item .remove-bet { background: #dc3545; border: none; color: #fff; width: 24px; height: 24px; border-radius: 50%; cursor: pointer; font-size: 14px; }
+        
+        /* Notifications & Animations */
         .btn-back { background: #2d2d5e; border: 1px solid var(--primary-color); color: #ffffff; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-bottom: 20px; font-size: inherit; }
         .notification { position: fixed; top: 20px; right: 20px; background: #111128; border: 2px solid; border-radius: 10px; padding: 15px 25px; z-index: 9999; animation: slideIn 0.3s ease; font-size: inherit; }
         .notification.success { border-color: #28a745; color: #28a745; }
@@ -143,6 +156,8 @@
         @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-10px); } 75% { transform: translateX(10px); } }
         @keyframes spin { to { transform: rotate(360deg); } }
         .loading-spinner { display: inline-block; width: 30px; height: 30px; border: 3px solid #1e3a5f; border-top-color: var(--primary-color); border-radius: 50%; animation: spin 1s linear infinite; }
+        
+        /* H2H & Charts */
         .standing-logo { width: 24px; height: 24px; display: inline-block; vertical-align: middle; margin-right: 5px; }
         .standing-logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
         .h2h-section { background: #111128; border: 1px solid #1e3a5f; border-radius: 10px; padding: 20px; margin-top: 20px; }
@@ -163,6 +178,8 @@
         .trend-positive { background: rgba(40, 167, 69, 0.2); color: #28a745; }
         .trend-negative { background: rgba(220, 53, 69, 0.2); color: #dc3545; }
         .trend-neutral { background: rgba(255, 193, 7, 0.2); color: #ffc107; }
+        
+        /* Theme & Injuries */
         .theme-selector { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px; }
         .theme-option { width: 40px; height: 40px; border-radius: 50%; cursor: pointer; border: 3px solid transparent; transition: all 0.3s ease; }
         .theme-option:hover { transform: scale(1.1); }
@@ -171,6 +188,8 @@
         .injury-item { background: #0d0d24; border-left: 4px solid #dc3545; padding: 10px; margin-bottom: 8px; border-radius: 5px; }
         .injury-player { font-weight: bold; color: #ffffff; }
         .injury-type { color: #87ceeb; font-size: calc(var(--font-size-base) * 0.85); }
+        
+        /* API Search Sections */
         .api-section { background: #0d0d24; border: 2px solid #1e3a5f; border-radius: 10px; padding: 20px; margin-bottom: 20px; transition: all 0.3s ease; }
         .api-section:hover { border-color: var(--primary-color); }
         .api-section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #1e3a5f; }
@@ -194,81 +213,44 @@
         .key-status { display: inline-block; padding: 3px 8px; border-radius: 10px; font-size: calc(var(--font-size-base) * 0.75); margin-left: 10px; }
         .key-status.saved { background: rgba(40, 167, 69, 0.2); color: #28a745; }
         .key-status.not-saved { background: rgba(220, 53, 69, 0.2); color: #dc3545; }
-        
-        /* Stili per il pannello login/sync */
-        .sync-panel { 
-            background: #111128; border: 1px solid #1e3a5f; border-radius: 10px; 
-            padding: 20px; margin-bottom: 20px; text-align: center; 
-        }
-        .sync-status { 
-            display: inline-block; padding: 4px 12px; border-radius: 15px; 
-            font-size: 0.8em; font-weight: bold; margin-left: 10px; 
-        }
-        .sync-online { background: rgba(40, 167, 69, 0.2); color: #28a745; }
-        .sync-offline { background: rgba(220, 53, 69, 0.2); color: #dc3545; }
-        .auth-input { 
-            width: 100%; max-width: 300px; padding: 10px; margin: 5px; 
-            background: #1a1a3e; border: 1px solid var(--primary-color); 
-            color: white; border-radius: 5px; font-size: inherit; 
-        }
-        .hidden { display: none !important; }
 
-        /* Stili specifici per la nuova Schedina AI */
-        .schedina-layout {
-            display: flex;
-            gap: 20px;
+        /* === NUOVI STILI PER SCHEDINA AI AVANZATA === */
+        .schedina-layout { display: flex; gap: 20px; }
+        .schedina-main { flex: 3; }
+        .schedina-sidebar { flex: 1; background: #111128; border: 1px solid #1e3a5f; border-radius: 10px; padding: 15px; max-height: 80vh; overflow-y: auto; }
+        .league-checkbox-item { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; padding: 5px; background: #1a1a3e; border-radius: 5px; }
+        .league-checkbox-item input { width: 18px; height: 18px; cursor: pointer; }
+        .ai-prediction-card { background: #1a1a3e; border: 1px solid #1e3a5f; border-left: 4px solid var(--primary-color); border-radius: 8px; padding: 15px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .confidence-score { font-weight: bold; font-size: 1.2em; color: #FFD700; }
+        .prediction-type { background: var(--primary-color); color: white; padding: 2px 8px; border-radius: 4px; font-size: 0.8em; margin-top: 5px; display: inline-block; }
+        
+        /* Stili per la griglia delle 17 giocate */
+        .bet-types-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); 
+            gap: 10px; 
+            margin-bottom: 20px; 
         }
-        .schedina-main {
-            flex: 3;
-        }
-        .schedina-sidebar {
-            flex: 1;
-            background: #111128;
-            border: 1px solid #1e3a5f;
-            border-radius: 10px;
-            padding: 15px;
-            max-height: 80vh;
-            overflow-y: auto;
-        }
-        .league-checkbox-item {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 8px;
-            padding: 5px;
-            background: #1a1a3e;
-            border-radius: 5px;
-        }
-        .league-checkbox-item input {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-        }
-        .ai-prediction-card {
+        .bet-type-btn {
             background: #1a1a3e;
             border: 1px solid #1e3a5f;
-            border-left: 4px solid var(--primary-color);
             border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .confidence-score {
+            padding: 12px 5px;
+            color: #87ceeb;
             font-weight: bold;
-            font-size: 1.2em;
-            color: #FFD700;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: center;
+            font-size: 0.9em;
         }
-        .prediction-type {
-            background: var(--primary-color);
-            color: white;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 0.8em;
-            margin-top: 5px;
-            display: inline-block;
+        .bet-type-btn:hover { border-color: var(--primary-color); color: white; }
+        .bet-type-btn.selected {
+            background: #FFD700;
+            color: #000;
+            border-color: #FFD700;
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.4);
         }
+
         @media (max-width: 768px) {
             .schedina-layout { flex-direction: column; }
             .schedina-sidebar { max-height: 300px; }
@@ -280,18 +262,19 @@
     <div class="datetime-bar">
         <label>📅 Data:</label>
         <input type="date" id="currentDate">
-        <label> Ora:</label>
+        <label>⏰ Ora:</label>
         <input type="time" id="currentTime">
     </div>
     <div class="tabs">
         <button class="tab-btn active" onclick="switchTab('palinsesto')">📋 Palinsesto</button>
         <button class="tab-btn" onclick="switchTab('partita')">🎮 Partita</button>
-        <button class="tab-btn" onclick="switchTab('storico')"> Storico</button>
+        <button class="tab-btn" onclick="switchTab('storico')">📊 Storico</button>
         <button class="tab-btn" onclick="switchTab('confronto')">⚔️ Confronto</button>
         <button class="tab-btn" onclick="switchTab('schedina')">🤖 Schedina AI</button>
         <button class="tab-btn" onclick="switchTab('impostazioni')">⚙️ Impostazioni</button>
     </div>
 
+    <!-- TAB PALINSESTO -->
     <div id="tab-palinsesto" class="tab-content active">
         <div style="background:#111128;padding:15px;border-radius:10px;margin-bottom:20px;display:flex;align-items:center;gap:15px;flex-wrap:wrap;">
             <label style="color:#87ceeb;">Campionato:</label>
@@ -315,9 +298,10 @@
         <button class="btn btn-today" onclick="scrollToToday()">📅 Vai ad OGGI</button>
     </div>
 
+    <!-- TAB PARTITA -->
     <div id="tab-partita" class="tab-content">
         <div id="matchDetailContainer" class="match-detail-container">
-            <button class="btn-back" onclick="closeMatchDetail()">️ Torna al Palinsesto</button>
+            <button class="btn-back" onclick="closeMatchDetail()">⬅️ Torna al Palinsesto</button>
             <div id="matchDetailContent"></div>
         </div>
         <div id="matchDetailPlaceholder" style="text-align:center;padding:60px;color:#87ceeb;">
@@ -325,6 +309,7 @@
         </div>
     </div>
 
+    <!-- TAB STORICO -->
     <div id="tab-storico" class="tab-content">
         <div style="background:#111128;padding:15px;border-radius:10px;margin-bottom:20px;">
             <label style="color:#87ceeb;">Campionato:</label>
@@ -333,6 +318,7 @@
         <div id="matchesStorico"></div>
     </div>
 
+    <!-- TAB CONFRONTO -->
     <div id="tab-confronto" class="tab-content">
         <div class="settings-section">
             <h3>⚔️ Confronto Squadre</h3>
@@ -351,16 +337,28 @@
         <div id="compareResults"></div>
     </div>
 
+    <!-- TAB SCHEDINA AI (RISTRUTTURATO) -->
     <div id="tab-schedina" class="tab-content">
         <div class="schedina-layout">
-            <!-- Colonna Principale: Generatore AI -->
+            
+            <!-- Colonna Principale: Generatore e Lista Partite -->
             <div class="schedina-main">
+                
+                <!-- SEZIONE 1: SELEZIONE GIOCATES (MAX 2) -->
                 <div class="settings-section">
-                    <h3>🤖 Schedina AI - Strategia "12 + Under 4.5"</h3>
+                    <h3>🎯 Seleziona la Giocata (Max 2)</h3>
                     <p style="color:#87ceeb; font-size:0.9em; margin-bottom:15px;">
-                        L'AI analizza le partite future selezionando quelle con alta probabilità di risultato non nullo (1 o 2) e totale gol ≤ 4.
+                        Scegli fino a 2 tipologie di scommessa. L'AI cercherà le partite con la più alta probabilità statistica per questa combinazione.
                     </p>
                     
+                    <div class="bet-types-grid" id="betTypesGrid">
+                        <!-- Le 17 giocate verranno generate qui via JS -->
+                    </div>
+                </div>
+
+                <!-- SEZIONE 2: NUMERO PARTITE E GENERATORE -->
+                <div class="settings-section">
+                    <h3>🤖 Numero di Partite da Suggerire</h3>
                     <div class="schedina-buttons">
                         <button class="schedina-btn" onclick="selectSchedinaCount(1)">1</button>
                         <button class="schedina-btn" onclick="selectSchedinaCount(2)">2</button>
@@ -375,18 +373,20 @@
                     </div>
                 </div>
 
+                <!-- Sezione Risultati AI (nascosta finché non generi) -->
                 <div class="settings-section" id="aiAnalysisSection" style="display:none;">
                     <h3>📊 Partite Suggerite (Top Probability)</h3>
                     <div id="aiPredictionsList"></div>
                 </div>
 
+                <!-- La tua schedina finale -->
                 <div class="settings-section">
                     <h3>📋 La Tua Schedina</h3>
                     <div class="schedina-list" id="schedinaList">
                         <div style="text-align:center;color:#87ceeb;padding:20px;">Nessuna giocata</div>
                     </div>
                     <div style="margin-top:15px;text-align:center;">
-                        <button class="btn btn-danger" onclick="clearSchedina()">️ Svuota</button>
+                        <button class="btn btn-danger" onclick="clearSchedina()">🗑️ Svuota</button>
                         <button class="btn btn-success" onclick="exportSchedinaToText()">📝 Copia Testo</button>
                     </div>
                 </div>
@@ -396,16 +396,19 @@
             <div class="schedina-sidebar">
                 <h4 style="color:var(--primary-color); margin-bottom:15px; border-bottom:1px solid #1e3a5f; padding-bottom:5px;">🏆 Filtra Campionati</h4>
                 <div id="leagueFilterList">
-                    <!-- Checkbox generati dinamicamente -->
+                    <!-- Checkbox generati dinamicamente via JS -->
+                    <div style="color:#87ceeb; font-size:0.9em;">Caricamento campionati...</div>
                 </div>
                 <div style="margin-top:15px; display:flex; gap:5px;">
                     <button class="btn btn-secondary" style="flex:1; font-size:0.8em;" onclick="selectAllLeagues(true)">Tutti</button>
                     <button class="btn btn-secondary" style="flex:1; font-size:0.8em;" onclick="selectAllLeagues(false)">Nessuno</button>
                 </div>
             </div>
+
         </div>
     </div>
 
+    <!-- TAB IMPOSTAZIONI (SENZA SYNC MULTI-DEVICE) -->
     <div id="tab-impostazioni" class="tab-content">
         <div class="api-section thesportsdb">
             <div class="api-section-header">
@@ -418,7 +421,7 @@
             </p>
             <div class="league-search-container">
                 <div class="settings-row">
-                    <label> API Key:</label>
+                    <label>🔑 API Key:</label>
                     <input type="password" id="thesportsdbApiKey" placeholder="Usa '123' per il tier gratuito" style="flex:1;">
                     <button class="btn" onclick="saveTheSportsDBKey()">💾 Salva</button>
                     <button class="btn btn-secondary" onclick="testTheSportsDBKey()">🧪 Test</button>
@@ -477,14 +480,14 @@
                     <label>Campionato:</label>
                     <select id="footballDataLeague" style="flex:1;">
                         <option value="">-- Seleziona --</option>
-                        <optgroup label=" Competizioni">
+                        <optgroup label="🏆 Competizioni">
                             <option value="CL">UEFA Champions League</option>
                             <option value="EL">UEFA Europa League</option>
                             <option value="ECL">UEFA Conference League</option>
                             <option value="EC">European Championship</option>
                             <option value="WC">FIFA World Cup 2026</option>
                         </optgroup>
-                        <optgroup label="🏴󠁿 Inghilterra">
+                        <optgroup label="🏴󠁢󠁮󠁧󠁿 Inghilterra">
                             <option value="PL">Premier League</option>
                             <option value="ELC">Championship</option>
                             <option value="FAC">FA Cup</option>
@@ -512,7 +515,7 @@
                         <optgroup label="🇵🇹 Portogallo">
                             <option value="PPL">Primeira Liga</option>
                         </optgroup>
-                        <optgroup label="🇪 Belgio">
+                        <optgroup label="🇧🇪 Belgio">
                             <option value="JPL">Jupiler Pro League</option>
                         </optgroup>
                         <optgroup label="🇧🇷 Brasile">
@@ -535,13 +538,13 @@
         </div>
 
         <div class="settings-section">
-            <h3> Ordina Campionati</h3>
+            <h3>📋 Ordina Campionati</h3>
             <p style="color:#87ceeb;margin-bottom:15px;">Usa le frecce per impostare l'ordine di visualizzazione</p>
             <div class="saved-leagues-list" id="leagueOrderList"></div>
         </div>
 
         <div class="settings-section">
-            <h3> GROQ AI</h3>
+            <h3>🧠 GROQ AI</h3>
             <div class="api-config">
                 <div class="settings-row">
                     <label>GROQ API Key:</label>
@@ -583,39 +586,12 @@
         </div>
 
         <div class="settings-section">
-            <h3>☁️ Sincronizzazione Multi-Device</h3>
-            
-            <!-- Pannello Login -->
-            <div id="authPanel" class="sync-panel">
-              <p style="color:#87ceeb;margin-bottom:15px;">Accedi per sincronizzare i dati tra tutti i tuoi dispositivi</p>
-              <input type="email" id="authEmail" class="auth-input" placeholder="Email">
-              <input type="password" id="authPassword" class="auth-input" placeholder="Password">
-              <br>
-              <button class="btn" onclick="signIn()">🔑 Accedi</button>
-              <button class="btn btn-secondary" onclick="signUp()">📝 Registrati</button>
-              <div id="authError" style="color:#dc3545;margin-top:10px;font-size:0.9em;"></div>
-            </div>
-
-            <!-- Pannello Utente Loggato -->
-            <div id="userPanel" class="sync-panel hidden">
-              <p style="color:#28a745;font-weight:bold;">✅ Connesso come: <span id="userEmail"></span></p>
-              <div style="margin:15px 0;">
-                Stato Sync: <span id="syncStatus" class="sync-status sync-offline">⏳ In attesa...</span>
-              </div>
-              <button class="btn" onclick="uploadToCloud()">⬆️ Carica dati sul Cloud</button>
-              <button class="btn btn-secondary" onclick="downloadFromCloud()">️ Scarica dati dal Cloud</button>
-              <button class="btn btn-danger" onclick="signOut()">🚪 Esci</button>
-              <div id="syncMessage" style="margin-top:10px;font-size:0.9em;color:#87ceeb;"></div>
-            </div>
-        </div>
-
-        <div class="settings-section">
             <h3>🗄️ Gestione Dati</h3>
             <div class="settings-row">
-                <button class="btn btn-secondary" onclick="exportAllData()"> Esporta</button>
+                <button class="btn btn-secondary" onclick="exportAllData()">📤 Esporta</button>
                 <button class="btn btn-import" onclick="document.getElementById('importFileInput').click()">📥 Importa</button>
                 <input type="file" id="importFileInput" accept=".json" onchange="importData(event)" style="display:none;">
-                <button class="btn btn-danger" onclick="clearAllData()">️ Cancella</button>
+                <button class="btn btn-danger" onclick="clearAllData()">🗑️ Cancella</button>
             </div>
             <p style="color:#87ceeb;font-size:0.85em;margin-top:10px;">
                 💡 <strong>Esporta</strong>: Salva tutti i dati in un file JSON per trasferirli su un altro dispositivo<br>
@@ -640,7 +616,19 @@
         let sortByDate = true;
         let currentTheme = 'blue';
         let bettingHistory = [];
-        let selectedLeaguesForSchedina = new Set(); // Nuove variabili per la schedina avanzata
+        
+        // Variabili per la nuova Schedina AI
+        let selectedLeaguesForSchedina = new Set();
+        let selectedBetTypes = []; // Array per memorizzare max 2 giocate
+
+        // Le 17 giocate classiche
+        const BET_TYPES_LIST = [
+            '1', 'X', '2', '1X', '12', 'X2',
+            'Over 1,5', 'Over 2,5', 'Under 3,5', 'Under 4,5',
+            'Gol', 'No Gol',
+            'MG Casa 0-1', 'MG Casa 1-3', 'MG Casa 2-4',
+            'MG Ospite 0-1', 'MG Ospite 1-3' 
+        ];
 
         const LEAGUE_PALETTE = ['#1e90ff', '#ff6b35', '#28a745', '#ffc107', '#dc3545', '#9c27b0', '#00bcd4', '#e91e63', '#795548', '#607d8b'];
 
@@ -703,6 +691,7 @@
             renderAll();
             loadAllSettings();
             renderSchedina();
+            renderBetTypesGrid(); // Inizializza la griglia delle 17 giocate
             renderLeagueFilterSidebar(); // Inizializza la sidebar dei filtri
         });
 
@@ -778,7 +767,7 @@
             localStorage.setItem('apifootballApiKey', key);
             document.getElementById('apifootballKeyStatus').textContent = '✅ Salvata';
             document.getElementById('apifootballKeyStatus').className = 'key-status saved';
-            showNotification(' API Key API-Football salvata!', 'success');
+            showNotification('🔑 API Key API-Football salvata!', 'success');
         }
 
         async function testTheSportsDBKey() {
@@ -795,7 +784,7 @@
                     document.getElementById('tsdbKeyStatus').className = 'key-status saved';
                 } else {
                     showNotification('❌ Chiave TheSportsDB non valida o senza risultati', 'error');
-                    document.getElementById('tsdbKeyStatus').textContent = ' Non valida';
+                    document.getElementById('tsdbKeyStatus').textContent = '❌ Non valida';
                     document.getElementById('tsdbKeyStatus').className = 'key-status not-saved';
                 }
             } catch (error) {
@@ -1094,7 +1083,7 @@
                 const response = await fetch(url, { headers: { 'x-apisports-key': apiKey, 'x-rapidapi-host': 'v3.football.api-sports.io' } });
                 if (!response.ok) { throw new Error('HTTP ' + response.status + ': ' + response.statusText); }
                 const data = await response.json();
-                if (!data.response || data.response.length === 0) { showNotification(' Nessuna partita trovata', 'error'); return; }
+                if (!data.response || data.response.length === 0) { showNotification('❌ Nessuna partita trovata', 'error'); return; }
                 let addedCount = 0;
                 data.response.forEach(fixture => {
                     const matchDate = new Date(fixture.fixture.date);
@@ -1292,7 +1281,7 @@
             if (!c) return;
             let html = '';
             if (leagueOrder.length > 0) {
-                html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><span style="color:#87ceeb;">Campionati salvati</span><button class="btn btn-danger" onclick="clearLeagueOrder()" style="padding:5px 10px;font-size:12px;">️ Svuota lista</button></div>';
+                html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><span style="color:#87ceeb;">Campionati salvati</span><button class="btn btn-danger" onclick="clearLeagueOrder()" style="padding:5px 10px;font-size:12px;">🗑️ Svuota lista</button></div>';
                 html += leagueOrder.map((l, i) => '<div class="league-order-item" style="--league-color: ' + getLeagueColor(l) + ';"><span style="flex:1;">⚽ ' + l + '</span><div class="league-order-buttons"><button class="league-order-btn" onclick="removeFromOrder(' + i + ')" title="Rimuovi dalla lista" style="background:#dc3545;">✕</button><button class="league-order-btn" onclick="moveLeagueUp(' + i + ')" ' + (i === 0 ? 'disabled' : '') + '>↑</button><button class="league-order-btn" onclick="moveLeagueDown(' + i + ')" ' + (i === leagueOrder.length - 1 ? 'disabled' : '') + '>↓</button></div></div>').join('');
             } else { html = '<div style="text-align:center;padding:20px;color:#87ceeb;">Nessun campionato</div>'; }
             c.innerHTML = html;
@@ -1336,7 +1325,10 @@
             const i = ['palinsesto', 'partita', 'storico', 'confronto', 'schedina', 'impostazioni'].indexOf(t);
             if (i >= 0) document.querySelectorAll('.tab-btn')[i].classList.add('active');
             document.getElementById('tab-' + t).classList.add('active');
-            if (t === 'schedina') renderLeagueFilterSidebar();
+            if (t === 'schedina') {
+                renderLeagueFilterSidebar();
+                renderBetTypesGrid();
+            }
         }
 
         function renderAll() { renderPalinsesto(); renderStorico(); }
@@ -1402,7 +1394,7 @@
             const hLogo = getTeamLogo(match.homeTeam, 'detail');
             const aLogo = getTeamLogo(match.awayTeam, 'detail');
             const resultHtml = match.status === 'giocata' ? '<span style="color:#28a745;">✅ Risultato: ' + match.homeGoals + ' - ' + match.awayGoals + '</span>' : '<span style="color:#FFD700;">⏳ Da giocare - ' + (match.time || 'N/D') + '</span>';
-            document.getElementById('matchDetailContent').innerHTML = '<div class="match-header-detail" style="--league-color: ' + lc + ';"><div class="match-header-top"><div class="match-header-title" style="color: ' + lc + ';">' + match.league + ' - Giornata: ' + rn + '</div><div class="match-header-time">⏰ ' + (match.time || 'N/D') + '</div></div><div style="text-align:center;color:#87ceeb;margin-bottom:10px;"> ' + match.date + '</div><div class="match-teams-display"><div class="team-display"><div class="team-goals-detail">⚽ Gol: ' + hg.fatti + ' F / ' + hg.subiti + ' S</div><div class="team-logo-container">' + hLogo + '</div><div class="team-name">' + match.homeTeam + '</div><div class="team-form-detail">' + createFormHTML(match.homeForm) + '</div><div style="margin-top:5px;font-size:0.85em;">' + createFormResults(match.homeTeam) + '</div><div class="team-result-detail" style="margin-top:10px;">' + resultHtml + '</div></div><div class="vs-separator" style="color: ' + lc + ';">VS</div><div class="team-display"><div class="team-goals-detail">⚽ Gol: ' + ag.fatti + ' F / ' + ag.subiti + ' S</div><div class="team-logo-container">' + aLogo + '</div><div class="team-name">' + match.awayTeam + '</div><div class="team-form-detail">' + createFormHTML(match.awayForm) + '</div><div style="margin-top:5px;font-size:0.85em;">' + createFormResults(match.awayTeam) + '</div><div class="team-result-detail" style="margin-top:10px;">' + resultHtml + '</div></div></div></div><div class="stats-grid-detail"><div class="stats-panel" style="--league-color: ' + lc + ';"><div id="clickInfo" class="click-info" style="display:none;">1° click: <span id="firstClickInfo"></span> - clicca 2° per combo</div><div id="comboError" class="combo-error" style="display:none;">❌ Combo non valida!</div><div class="stats-section"><div class="stats-section-title" style="color: ' + lc + ';">Doppia Chance</div><div class="stats-row"><div class="stat-item" id="dc-1x" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'1X\',\'' + match.date + '\',\'dc-1x\',\'DC\')"><span class="label">1X</span><span class="value">-</span></div><div class="stat-item" id="dc-12" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'12\',\'' + match.date + '\',\'dc-12\',\'DC\')"><span class="label">12</span><span class="value">-</span></div><div class="stat-item" id="dc-x2" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'X2\',\'' + match.date + '\',\'dc-x2\',\'DC\')"><span class="label">X2</span><span class="value">-</span></div></div></div><div class="stats-section"><div class="stats-section-title" style="color: ' + lc + ';">Under - Over</div><div class="stats-row"><div class="stat-item" id="o-15" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'Over 1,5\',\'' + match.date + '\',\'o-15\',\'UNDER_OVER\')"><span class="label">Over 1,5</span><span class="value">-</span></div><div class="stat-item" id="o-25" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'Over 2,5\',\'' + match.date + '\',\'o-25\',\'UNDER_OVER\')"><span class="label">Over 2,5</span><span class="value">-</span></div><div class="stat-item" id="u-35" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'Under 3,5\',\'' + match.date + '\',\'u-35\',\'UNDER_OVER\')"><span class="label">Under 3,5</span><span class="value">-</span></div><div class="stat-item" id="u-45" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'Under 4,5\',\'' + match.date + '\',\'u-45\',\'UNDER_OVER\')"><span class="label">Under 4,5</span><span class="value">-</span></div></div></div><div class="stats-section"><div class="stats-section-title" style="color: ' + lc + ';">Multigol Casa - Ospite</div><div class="stats-row-6"><div class="stat-item" id="mh-01" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG Casa 0-1\',\'' + match.date + '\',\'mh-01\',\'MULTIGOL_CASA\')"><span class="label">Casa 0-1</span><span class="value">-</span></div><div class="stat-item" id="mh-13" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG Casa 1-3\',\'' + match.date + '\',\'mh-13\',\'MULTIGOL_CASA\')"><span class="label">Casa 1-3</span><span class="value">-</span></div><div class="stat-item" id="mh-24" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG Casa 2-4\',\'' + match.date + '\',\'mh-24\',\'MULTIGOL_CASA\')"><span class="label">Casa 2-4</span><span class="value">-</span></div><div class="stat-item" id="ma-01" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG Ospite 0-1\',\'' + match.date + '\',\'ma-01\',\'MULTIGOL_OSPITE\')"><span class="label">Ospite 0-1</span><span class="value">-</span></div><div class="stat-item" id="ma-13" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG Ospite 1-3\',\'' + match.date + '\',\'ma-13\',\'MULTIGOL_OSPITE\')"><span class="label">Ospite 1-3</span><span class="value">-</span></div><div class="stat-item" id="ma-24" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG Ospite 2-4\',\'' + match.date + '\',\'ma-24\',\'MULTIGOL_OSPITE\')"><span class="label">Ospite 2-4</span><span class="value">-</span></div></div></div><div class="stats-section"><div class="stats-section-title" style="color: ' + lc + ';">Multigol Totali</div><div class="stats-row"><div class="stat-item" id="mt-14" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG 1-4\',\'' + match.date + '\',\'mt-14\',\'MULTIGOL_TOTALE\')"><span class="label">1-4</span><span class="value">-</span></div><div class="stat-item" id="mt-25" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG 2-5\',\'' + match.date + '\',\'mt-25\',\'MULTIGOL_TOTALE\')"><span class="label">2-5</span><span class="value">-</span></div><div class="stat-item" id="oh-15" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'Over 1,5 Casa\',\'' + match.date + '\',\'oh-15\',\'MULTIGOL_TOTALE\')"><span class="label">O 1,5 Casa</span><span class="value">-</span></div><div class="stat-item" id="oa-15" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'Over 1,5 Ospite\',\'' + match.date + '\',\'oa-15\',\'MULTIGOL_TOTALE\')"><span class="label">O 1,5 Ospite</span><span class="value">-</span></div></div></div></div><div class="stats-panel"><div class="stats-section-title" style="color:' + lc + ';">📊 Classifica</div><div id="standingsContent" style="margin-top:15px;"></div></div></div><div class="h2h-section"><div class="stats-section-title" style="color:' + lc + ';">⚔️ Head-to-Head (Ultimi Incontri)</div><div id="h2hContent"></div></div><div class="h2h-section"><div class="stats-section-title" style="color:' + lc + ';">🏥 Infortuni e Squalifiche</div><div id="injuriesContent"></div></div><div class="charts-container" id="chartsContainer"></div><div class="ai-panel" style="--league-color: ' + lc + ';"><div class="stats-section-title" style="color:' + lc + ';">🤖 ANALISI AI (GROQ)</div><div class="ai-content" id="matchAiContent"><div style="text-align:center;color:#87ceeb;"><div style="font-size:32px;margin-bottom:10px;">⏳</div>Generazione...</div></div><div class="export-buttons"><button class="btn btn-success" onclick="exportMatchAIAsPNG()">📷 PNG</button><button class="btn" onclick="exportMatchAIAsText()">📝 Testo</button><button class="btn btn-secondary" onclick="shareMatchAITelegram()">✈️ Telegram</button><button class="btn btn-secondary" onclick="shareMatchAIWhatsApp()">💬 WhatsApp</button><button class="btn btn-secondary" onclick="shareMatchAIEmail()">📧 Email</button></div></div>';
+            document.getElementById('matchDetailContent').innerHTML = '<div class="match-header-detail" style="--league-color: ' + lc + ';"><div class="match-header-top"><div class="match-header-title" style="color: ' + lc + ';">' + match.league + ' - Giornata: ' + rn + '</div><div class="match-header-time">⏰ ' + (match.time || 'N/D') + '</div></div><div style="text-align:center;color:#87ceeb;margin-bottom:10px;">📅 ' + match.date + '</div><div class="match-teams-display"><div class="team-display"><div class="team-goals-detail">⚽ Gol: ' + hg.fatti + ' F / ' + hg.subiti + ' S</div><div class="team-logo-container">' + hLogo + '</div><div class="team-name">' + match.homeTeam + '</div><div class="team-form-detail">' + createFormHTML(match.homeForm) + '</div><div style="margin-top:5px;font-size:0.85em;">' + createFormResults(match.homeTeam) + '</div><div class="team-result-detail" style="margin-top:10px;">' + resultHtml + '</div></div><div class="vs-separator" style="color: ' + lc + ';">VS</div><div class="team-display"><div class="team-goals-detail">⚽ Gol: ' + ag.fatti + ' F / ' + ag.subiti + ' S</div><div class="team-logo-container">' + aLogo + '</div><div class="team-name">' + match.awayTeam + '</div><div class="team-form-detail">' + createFormHTML(match.awayForm) + '</div><div style="margin-top:5px;font-size:0.85em;">' + createFormResults(match.awayTeam) + '</div><div class="team-result-detail" style="margin-top:10px;">' + resultHtml + '</div></div></div></div><div class="stats-grid-detail"><div class="stats-panel" style="--league-color: ' + lc + ';"><div id="clickInfo" class="click-info" style="display:none;">1° click: <span id="firstClickInfo"></span> - clicca 2° per combo</div><div id="comboError" class="combo-error" style="display:none;">❌ Combo non valida!</div><div class="stats-section"><div class="stats-section-title" style="color: ' + lc + ';">Doppia Chance</div><div class="stats-row"><div class="stat-item" id="dc-1x" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'1X\',\'' + match.date + '\',\'dc-1x\',\'DC\')"><span class="label">1X</span><span class="value">-</span></div><div class="stat-item" id="dc-12" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'12\',\'' + match.date + '\',\'dc-12\',\'DC\')"><span class="label">12</span><span class="value">-</span></div><div class="stat-item" id="dc-x2" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'X2\',\'' + match.date + '\',\'dc-x2\',\'DC\')"><span class="label">X2</span><span class="value">-</span></div></div></div><div class="stats-section"><div class="stats-section-title" style="color: ' + lc + ';">Under - Over</div><div class="stats-row"><div class="stat-item" id="o-15" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'Over 1,5\',\'' + match.date + '\',\'o-15\',\'UNDER_OVER\')"><span class="label">Over 1,5</span><span class="value">-</span></div><div class="stat-item" id="o-25" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'Over 2,5\',\'' + match.date + '\',\'o-25\',\'UNDER_OVER\')"><span class="label">Over 2,5</span><span class="value">-</span></div><div class="stat-item" id="u-35" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'Under 3,5\',\'' + match.date + '\',\'u-35\',\'UNDER_OVER\')"><span class="label">Under 3,5</span><span class="value">-</span></div><div class="stat-item" id="u-45" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'Under 4,5\',\'' + match.date + '\',\'u-45\',\'UNDER_OVER\')"><span class="label">Under 4,5</span><span class="value">-</span></div></div></div><div class="stats-section"><div class="stats-section-title" style="color: ' + lc + ';">Multigol Casa - Ospite</div><div class="stats-row-6"><div class="stat-item" id="mh-01" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG Casa 0-1\',\'' + match.date + '\',\'mh-01\',\'MULTIGOL_CASA\')"><span class="label">Casa 0-1</span><span class="value">-</span></div><div class="stat-item" id="mh-13" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG Casa 1-3\',\'' + match.date + '\',\'mh-13\',\'MULTIGOL_CASA\')"><span class="label">Casa 1-3</span><span class="value">-</span></div><div class="stat-item" id="mh-24" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG Casa 2-4\',\'' + match.date + '\',\'mh-24\',\'MULTIGOL_CASA\')"><span class="label">Casa 2-4</span><span class="value">-</span></div><div class="stat-item" id="ma-01" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG Ospite 0-1\',\'' + match.date + '\',\'ma-01\',\'MULTIGOL_OSPITE\')"><span class="label">Ospite 0-1</span><span class="value">-</span></div><div class="stat-item" id="ma-13" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG Ospite 1-3\',\'' + match.date + '\',\'ma-13\',\'MULTIGOL_OSPITE\')"><span class="label">Ospite 1-3</span><span class="value">-</span></div><div class="stat-item" id="ma-24" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG Ospite 2-4\',\'' + match.date + '\',\'ma-24\',\'MULTIGOL_OSPITE\')"><span class="label">Ospite 2-4</span><span class="value">-</span></div></div></div><div class="stats-section"><div class="stats-section-title" style="color: ' + lc + ';">Multigol Totali</div><div class="stats-row"><div class="stat-item" id="mt-14" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG 1-4\',\'' + match.date + '\',\'mt-14\',\'MULTIGOL_TOTALE\')"><span class="label">1-4</span><span class="value">-</span></div><div class="stat-item" id="mt-25" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG 2-5\',\'' + match.date + '\',\'mt-25\',\'MULTIGOL_TOTALE\')"><span class="label">2-5</span><span class="value">-</span></div><div class="stat-item" id="oh-15" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'Over 1,5 Casa\',\'' + match.date + '\',\'oh-15\',\'MULTIGOL_TOTALE\')"><span class="label">O 1,5 Casa</span><span class="value">-</span></div><div class="stat-item" id="oa-15" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'Over 1,5 Ospite\',\'' + match.date + '\',\'oa-15\',\'MULTIGOL_TOTALE\')"><span class="label">O 1,5 Ospite</span><span class="value">-</span></div></div></div></div><div class="stats-panel"><div class="stats-section-title" style="color:' + lc + ';">📊 Classifica</div><div id="standingsContent" style="margin-top:15px;"></div></div></div><div class="h2h-section"><div class="stats-section-title" style="color:' + lc + ';">⚔️ Head-to-Head (Ultimi Incontri)</div><div id="h2hContent"></div></div><div class="h2h-section"><div class="stats-section-title" style="color:' + lc + ';">🏥 Infortuni e Squalifiche</div><div id="injuriesContent"></div></div><div class="charts-container" id="chartsContainer"></div><div class="ai-panel" style="--league-color: ' + lc + ';"><div class="stats-section-title" style="color:' + lc + ';">🤖 ANALISI AI (GROQ)</div><div class="ai-content" id="matchAiContent"><div style="text-align:center;color:#87ceeb;"><div style="font-size:32px;margin-bottom:10px;">⏳</div>Generazione...</div></div><div class="export-buttons"><button class="btn btn-success" onclick="exportMatchAIAsPNG()">📷 PNG</button><button class="btn" onclick="exportMatchAIAsText()">📝 Testo</button><button class="btn btn-secondary" onclick="shareMatchAITelegram()">✈️ Telegram</button><button class="btn btn-secondary" onclick="shareMatchAIWhatsApp()">💬 WhatsApp</button><button class="btn btn-secondary" onclick="shareMatchAIEmail()">📧 Email</button></div></div>';
             computeMatchStats(match);
             renderStandings(match.league, match.homeTeam, match.awayTeam, lc);
             renderHeadToHead(match);
@@ -1435,7 +1427,7 @@
 
         function renderCharts(match) {
             const container = document.getElementById('chartsContainer');
-            container.innerHTML = '<div class="chart-box"><div class="chart-title">📊 Forma Ultime 5 Partite</div><canvas id="formChart"></canvas></div><div class="chart-box"><div class="chart-title"> Gol Fatti/Subiti</div><canvas id="goalsChart"></canvas></div>';
+            container.innerHTML = '<div class="chart-box"><div class="chart-title">📊 Forma Ultime 5 Partite</div><canvas id="formChart"></canvas></div><div class="chart-box"><div class="chart-title">⚽ Gol Fatti/Subiti</div><canvas id="goalsChart"></canvas></div>';
             const homeForm = match.homeForm.slice(0, 5);
             const awayForm = match.awayForm.slice(0, 5);
             const formCtx = document.getElementById('formChart').getContext('2d');
@@ -1461,7 +1453,7 @@
             if (team1 === team2) { showNotification('Seleziona due squadre diverse!', 'error'); return; }
             const stats1 = getTeamGoals(team1);
             const stats2 = getTeamGoals(team2);
-            document.getElementById('compareResults').innerHTML = '<div class="settings-section"><h3>️ Confronto: ' + team1 + ' vs ' + team2 + '</h3><div class="advanced-stats"><div class="stat-box"><div class="stat-box-label">' + team1 + ' - Gol Fatti</div><div class="stat-box-value">' + stats1.fatti + '</div></div><div class="stat-box"><div class="stat-box-label">' + team1 + ' - Gol Subiti</div><div class="stat-box-value">' + stats1.subiti + '</div></div><div class="stat-box"><div class="stat-box-label">' + team2 + ' - Gol Fatti</div><div class="stat-box-value">' + stats2.fatti + '</div></div><div class="stat-box"><div class="stat-box-label">' + team2 + ' - Gol Subiti</div><div class="stat-box-value">' + stats2.subiti + '</div></div></div></div>';
+            document.getElementById('compareResults').innerHTML = '<div class="settings-section"><h3>⚔️ Confronto: ' + team1 + ' vs ' + team2 + '</h3><div class="advanced-stats"><div class="stat-box"><div class="stat-box-label">' + team1 + ' - Gol Fatti</div><div class="stat-box-value">' + stats1.fatti + '</div></div><div class="stat-box"><div class="stat-box-label">' + team1 + ' - Gol Subiti</div><div class="stat-box-value">' + stats1.subiti + '</div></div><div class="stat-box"><div class="stat-box-label">' + team2 + ' - Gol Fatti</div><div class="stat-box-value">' + stats2.fatti + '</div></div><div class="stat-box"><div class="stat-box-label">' + team2 + ' - Gol Subiti</div><div class="stat-box-value">' + stats2.subiti + '</div></div></div></div>';
         }
 
         function closeMatchDetail() {
@@ -1727,8 +1719,42 @@
         }
 
         // ============================================================
-        // === LOGICA SCHEDINA AI AVANZATA (12 + Under 4.5) ===
+        // === LOGICA SCHEDINA AI AVANZATA (17 GIOCATES + FILTRI) ===
         // ============================================================
+
+        function renderBetTypesGrid() {
+            const container = document.getElementById('betTypesGrid');
+            if (!container) return;
+            
+            let html = '';
+            BET_TYPES_LIST.forEach(bet => {
+                const isSelected = selectedBetTypes.includes(bet) ? 'selected' : '';
+                html += `<div class="bet-type-btn ${isSelected}" onclick="toggleBetType('${bet}', this)">${bet}</div>`;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        function toggleBetType(betType, element) {
+            const index = selectedBetTypes.indexOf(betType);
+            
+            if (index > -1) {
+                // Deseleziona
+                selectedBetTypes.splice(index, 1);
+                element.classList.remove('selected');
+            } else {
+                // Seleziona (max 2)
+                if (selectedBetTypes.length >= 2) {
+                    showNotification('⚠️ Puoi selezionare massimo 2 giocate alla volta!', 'error');
+                    return;
+                }
+                selectedBetTypes.push(betType);
+                element.classList.add('selected');
+            }
+            
+            // Abilita/disabilita bottone genera
+            document.getElementById('btnGenerateSchedina').disabled = (selectedBetTypes.length === 0 || selectedSchedinaCount === 0);
+        }
 
         function renderLeagueFilterSidebar() {
             const container = document.getElementById('leagueFilterList');
@@ -1775,47 +1801,75 @@
             selectedSchedinaCount = c;
             document.querySelectorAll('.schedina-btn').forEach(b => b.classList.remove('active'));
             event.target.classList.add('active');
-            document.getElementById('btnGenerateSchedina').disabled = false;
+            document.getElementById('btnGenerateSchedina').disabled = (selectedBetTypes.length === 0);
         }
 
-        // Calcola la probabilità statistica per 12 + Under 4.5
-        function calculate12UnderProbability(match) {
-            // Recupera statistiche storiche delle due squadre
+        // Calcola la probabilità statistica per la combinazione di giocate selezionate
+        function calculateCombinationProbability(match, betTypes) {
             const homeStats = getTeamDetailedStats(match.homeTeam);
             const awayStats = getTeamDetailedStats(match.awayTeam);
             
             if (!homeStats.count || !awayStats.count) return 0;
 
-            // 1. Probabilità di NON Pareggio (12)
-            // Basata sulla frequenza storica di pareggi delle due squadre
-            const homeDrawRate = homeStats.draws / homeStats.count;
-            const awayDrawRate = awayStats.draws / awayStats.count;
-            const avgDrawRate = (homeDrawRate + awayDrawRate) / 2;
-            const prob12 = 1 - avgDrawRate; // Più basso è il rate di pareggi, più alta è la prob di 12
+            let totalProb = 0;
+            let factors = betTypes.length;
 
-            // 2. Probabilità di Under 4.5
-            // Somma dei gol medi fatti/subiti
-            const homeAvgGoals = (homeStats.gf + homeStats.ga) / homeStats.count;
-            const awayAvgGoals = (awayStats.gf + awayStats.ga) / awayStats.count;
-            const expectedTotalGoals = (homeAvgGoals + awayAvgGoals) / 2;
-            
-            // Formula semplificata per Under 4.5: se i gol attesi sono bassi, la prob è alta
-            // Se expectedTotalGoals < 2.5 -> Prob quasi 100%. Se > 4 -> Prob bassa.
-            let probUnder45 = 1;
-            if (expectedTotalGoals > 2.5) {
-                probUnder45 = Math.max(0.1, 1 - ((expectedTotalGoals - 2.5) / 3)); 
-            }
+            betTypes.forEach(bet => {
+                let prob = 0;
+                
+                // Logica semplificata per calcolo probabilità basato sullo storico
+                if (bet === '1') {
+                    const homeWinRate = homeStats.wins / homeStats.count;
+                    const awayLossRate = awayStats.losses / awayStats.count;
+                    prob = (homeWinRate + awayLossRate) / 2;
+                } else if (bet === 'X') {
+                    const homeDrawRate = homeStats.draws / homeStats.count;
+                    const awayDrawRate = awayStats.draws / awayStats.count;
+                    prob = (homeDrawRate + awayDrawRate) / 2;
+                } else if (bet === '2') {
+                    const awayWinRate = awayStats.wins / awayStats.count;
+                    const homeLossRate = homeStats.losses / homeStats.count;
+                    prob = (awayWinRate + homeLossRate) / 2;
+                } else if (bet === '12') {
+                    const homeDrawRate = homeStats.draws / homeStats.count;
+                    const awayDrawRate = awayStats.draws / awayStats.count;
+                    prob = 1 - ((homeDrawRate + awayDrawRate) / 2);
+                } else if (bet === '1X') {
+                    const awayWinRate = awayStats.wins / awayStats.count;
+                    prob = 1 - awayWinRate;
+                } else if (bet === 'X2') {
+                    const homeWinRate = homeStats.wins / homeStats.count;
+                    prob = 1 - homeWinRate;
+                } else if (bet === 'Over 1,5') {
+                    const avgTotalGoals = ((homeStats.gf + homeStats.ga)/homeStats.count + (awayStats.gf + awayStats.ga)/awayStats.count) / 2;
+                    prob = Math.min(0.95, avgTotalGoals / 2.5);
+                } else if (bet === 'Over 2,5') {
+                    const avgTotalGoals = ((homeStats.gf + homeStats.ga)/homeStats.count + (awayStats.gf + awayStats.ga)/awayStats.count) / 2;
+                    prob = Math.min(0.9, Math.max(0.1, (avgTotalGoals - 1.5) / 2));
+                } else if (bet === 'Under 3,5') {
+                    const avgTotalGoals = ((homeStats.gf + homeStats.ga)/homeStats.count + (awayStats.gf + awayStats.ga)/awayStats.count) / 2;
+                    prob = Math.min(0.9, Math.max(0.1, 1 - ((avgTotalGoals - 2) / 3)));
+                } else if (bet === 'Under 4,5') {
+                    const avgTotalGoals = ((homeStats.gf + homeStats.ga)/homeStats.count + (awayStats.gf + awayStats.ga)/awayStats.count) / 2;
+                    prob = Math.min(0.95, Math.max(0.2, 1 - ((avgTotalGoals - 2.5) / 3.5)));
+                } else if (bet === 'Gol') {
+                    const bothScoreRate = (homeStats.bothScored / homeStats.count + awayStats.bothScored / awayStats.count) / 2;
+                    prob = bothScoreRate;
+                } else if (bet === 'No Gol') {
+                    const bothScoreRate = (homeStats.bothScored / homeStats.count + awayStats.bothScored / awayStats.count) / 2;
+                    prob = 1 - bothScoreRate;
+                }
+                // Aggiungi altre logiche per MG Casa/Ospite se necessario...
+                
+                totalProb += prob;
+            });
 
-            // Confidence Score combinato (Media ponderata)
-            // Diamo più peso all'Under 4.5 perché è più sicuro statisticamente rispetto al 12 secco
-            const combinedProb = (prob12 * 0.4) + (probUnder45 * 0.6);
-            
-            return Math.round(combinedProb * 100);
+            return Math.round((totalProb / factors) * 100);
         }
 
         function getTeamDetailedStats(teamName) {
             const matches = allMatches.filter(m => m.status === 'giocata' && (m.homeTeam === teamName || m.awayTeam === teamName));
-            let gf = 0, ga = 0, draws = 0;
+            let gf = 0, ga = 0, wins = 0, draws = 0, losses = 0, bothScored = 0;
             
             matches.forEach(m => {
                 const isHome = m.homeTeam === teamName;
@@ -1823,14 +1877,21 @@
                 const goalsAgainst = isHome ? m.awayGoals : m.homeGoals;
                 gf += goalsFor;
                 ga += goalsAgainst;
-                if (goalsFor === goalsAgainst) draws++;
+                if (goalsFor > goalsAgainst) wins++;
+                else if (goalsFor === goalsAgainst) draws++;
+                else losses++;
+                
+                if (goalsFor > 0 && goalsAgainst > 0) bothScored++;
             });
             
-            return { count: matches.length, gf, ga, draws };
+            return { count: matches.length, gf, ga, wins, draws, losses, bothScored };
         }
 
         function generateSmartSchedina() {
-            if (selectedSchedinaCount === 0) { showNotification('Seleziona il numero di partite!', 'error'); return; }
+            if (selectedSchedinaCount === 0 || selectedBetTypes.length === 0) { 
+                showNotification('Seleziona almeno 1 giocata e il numero di partite!', 'error'); 
+                return; 
+            }
             
             // Filtra partite future nei campionati selezionati
             let candidateMatches = allMatches.filter(m => m.status === 'futura');
@@ -1844,9 +1905,9 @@
                 return;
             }
 
-            // Calcola score per ogni partita
+            // Calcola score per ogni partita in base alle giocate selezionate
             const scoredMatches = candidateMatches.map(m => {
-                const score = calculate12UnderProbability(m);
+                const score = calculateCombinationProbability(m, selectedBetTypes);
                 return { match: m, score: score };
             });
 
@@ -1858,6 +1919,8 @@
             const container = document.getElementById('aiPredictionsList');
             let html = '';
             
+            const betComboString = selectedBetTypes.join(' + ');
+            
             topMatches.forEach(item => {
                 const m = item.match;
                 const confidence = item.score;
@@ -1868,12 +1931,12 @@
                         <div>
                             <div style="font-weight:bold; color:white;">${m.homeTeam} vs ${m.awayTeam}</div>
                             <div style="font-size:0.8em; color:#87ceeb;">${m.league} • ${m.date}</div>
-                            <span class="prediction-type">12 + Under 4.5</span>
+                            <span class="prediction-type">${betComboString}</span>
                         </div>
                         <div style="text-align:right;">
                             <div class="confidence-score">${confidence}%</div>
                             <div style="font-size:0.7em; color:#87ceeb;">Affidabilità</div>
-                            <button class="btn btn-success" style="padding:5px 10px; font-size:0.8em; margin-top:5px;" onclick="addBet('${m.homeTeam} vs ${m.awayTeam}', '12 + Under 4.5', '${m.date}')">➕ Aggiungi</button>
+                            <button class="btn btn-success" style="padding:5px 10px; font-size:0.8em; margin-top:5px;" onclick="addBet('${m.homeTeam} vs ${m.awayTeam}', '${betComboString}', '${m.date}')">➕ Aggiungi</button>
                         </div>
                     </div>
                 `;
@@ -1907,7 +1970,7 @@
 
         function exportSchedinaToText() {
             if (schedinaBets.length === 0) return;
-            let text = "🎲 SCHEDINA GESSSAI-PRO (12 + Under 4.5)\n\n";
+            let text = "🎲 SCHEDINA GESSSAI-PRO\n\n";
             schedinaBets.forEach(b => {
                 text += `• ${b.matchName}\n  Giocata: ${b.betType}\n\n`;
             });
@@ -1915,37 +1978,6 @@
                 showNotification('Schedina copiata negli appunti!', 'success');
             });
         }
-
-        // ============================================================
-        // === FIREBASE SYNC (Legacy Code kept for reference, but disabled by default due to SW issues) ===
-        // ============================================================
-        /*
-        const firebaseConfig = {
-          apiKey: "AIzaSyAbdZjsG5JVPN9LDhtpY3NAci6hpSa-aVo",
-          authDomain: "gesssai-pro.firebaseapp.com",
-          databaseURL: "https://gesssai-pro-default-rtdb.europe-west1.firebasedatabase.app",
-          projectId: "gesssai-pro",
-          storageBucket: "gesssai-pro.firebasestorage.app",
-          messagingSenderId: "362826177657",
-          appId: "1:362826177657:web:1a16c811df702fdb1548a8"
-        };
-
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.database();
-        let currentUser = null;
-        let syncListener = null;
-
-        function signUp() { ... } // (Codice omesso per brevità, già presente nel blocco precedente)
-        function signIn() { ... }
-        function signOut() { ... }
-        function showAuthError(msg) { ... }
-        function updateUI(user) { ... }
-        function uploadToCloud() { ... }
-        function downloadFromCloud() { ... }
-        function startRealtimeSync(uid) { ... }
-        function setStatus(text, className) { ... }
-        */
 
         // Service Worker Registration
         if ('serviceWorker' in navigator) {
