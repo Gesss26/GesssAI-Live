@@ -1,0 +1,3 @@
+cd C:\Scaricati\Webapp
+venv\Scripts\activate
+python campionati.py
