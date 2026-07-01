@@ -168,6 +168,7 @@ select, input[type="password"], input[type="number"], input[type="text"] { backg
 .match-flags-row { display: flex; gap: 6px; justify-content: center; flex-wrap: wrap; width: 100%; }
 .flag-badge { padding: 5px 8px; border-radius: 6px; font-size: 0.7em; font-weight: bold; display: flex; align-items: center; justify-content: center; gap: 4px; min-width: 90px; max-width: 110px; flex: 1; text-align: center; white-space: nowrap; }
 .flag-green { background: rgba(40, 167, 69, 0.2); color: #28a745; border: 1px solid #28a745; }
+.flag-red { background: rgba(220, 53, 69, 0.2); color: #dc3545; border: 1px solid #dc3545; }
 .flag-gold { background: rgba(255, 215, 0, 0.25); color: #FFD700; border: 2px solid #FFD700; box-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
 .flag-bomb { background: linear-gradient(135deg, rgba(255, 215, 0, 0.4), rgba(255, 140, 0, 0.3)); color: #FFD700; border: 2px solid #FFD700; box-shadow: 0 0 15px rgba(255, 215, 0, 0.6); animation: bombPulse 1.5s ease-in-out infinite; }
 .flag-bomb-icon { animation: bombShake 0.6s ease-in-out infinite; display: inline-block; }
@@ -205,7 +206,7 @@ select, input[type="password"], input[type="number"], input[type="text"] { backg
 <input type="date" id="filterDate" onchange="applyDateFilter()">
 <button class="btn btn-secondary" onclick="clearDateFilter()">🗑️ Pulisci</button>
 </div>
-<button class="btn btn-secondary" onclick="exportToCSV()"> Esporta CSV</button>
+<button class="btn btn-secondary" onclick="exportToCSV()">📄 Esporta CSV</button>
 <div class="toggle-container">
 <label style="color:#87ceeb;">Ordina per:</label>
 <label class="toggle-switch">
@@ -286,7 +287,7 @@ select, input[type="password"], input[type="number"], input[type="text"] { backg
 <div id="tab-impostazioni" class="tab-content">
 <div class="api-section thesportsdb">
 <div class="api-section-header">
-<div class="api-section-title"> TheSportsDB <span id="tsdbKeyStatus" class="key-status not-saved">Non salvata</span></div>
+<div class="api-section-title">🏆 TheSportsDB <span id="tsdbKeyStatus" class="key-status not-saved">Non salvata</span></div>
 <div class="api-badge">GRATUITA</div>
 </div>
 <p style="color:#87ceeb;margin-bottom:15px;font-size:calc(var(--font-size-base) * 0.9);">Database gratuito. Chiave gratuita: <strong>"123"</strong>. <a href="https://www.thesportsdb.com/api.php" target="_blank" style="color:#28a745;">www.thesportsdb.com</a></p>
@@ -298,7 +299,7 @@ select, input[type="password"], input[type="number"], input[type="text"] { backg
 <button class="btn btn-secondary" onclick="testTheSportsDBKey()">🧪 Test</button>
 </div>
 <div class="settings-row">
-<label> Cerca campionato:</label>
+<label>🔍 Cerca campionato:</label>
 <input type="text" id="tsdbSearchInput" placeholder="Es: Iceland, Besta deild..." style="flex:1;">
 <button class="btn" onclick="searchTheSportsDBLeague()">🔍 Cerca</button>
 </div>
@@ -311,21 +312,21 @@ select, input[type="password"], input[type="number"], input[type="text"] { backg
 </div>
 <div class="api-section apifootball">
 <div class="api-section-header">
-<div class="api-section-title"> API-Football <span id="apifootballKeyStatus" class="key-status not-saved">Non salvata</span></div>
+<div class="api-section-title">⚡ API-Football <span id="apifootballKeyStatus" class="key-status not-saved">Non salvata</span></div>
 <div class="api-badge">900+ CAMPIONATI</div>
 </div>
 <p style="color:#87ceeb;margin-bottom:15px;font-size:calc(var(--font-size-base) * 0.9);">API completa. <a href="https://www.api-football.com/" target="_blank" style="color:#ff6b35;">www.api-football.com</a></p>
 <div class="league-search-container">
 <div class="settings-row">
-<label> API Key:</label>
+<label>🔑 API Key:</label>
 <input type="password" id="apifootballApiKey" placeholder="API Key RapidAPI" style="flex:1;">
-<button class="btn" onclick="saveApiFootballKey()"> Salva</button>
+<button class="btn" onclick="saveApiFootballKey()">💾 Salva</button>
 <button class="btn btn-secondary" onclick="testApiFootballKey()">🧪 Test</button>
 </div>
 <div class="settings-row">
 <label>🔍 Cerca campionato:</label>
 <input type="text" id="apifootballSearchInput" placeholder="Es: Besta deild karla..." style="flex:1;">
-<button class="btn" onclick="searchApiFootballLeague()"> Cerca</button>
+<button class="btn" onclick="searchApiFootballLeague()">🔍 Cerca</button>
 </div>
 <div class="settings-row">
 <label>📅 Stagione:</label>
@@ -352,7 +353,7 @@ select, input[type="password"], input[type="number"], input[type="text"] { backg
 <option value="EC">European Championship</option>
 <option value="WC">FIFA World Cup 2026</option>
 </optgroup>
-<optgroup label="🏴󠁢󠁥󠁮󠁧󠁿 Inghilterra">
+<optgroup label="🏴 Inghilterra">
 <option value="PL">Premier League</option>
 <option value="ELC">Championship</option>
 <option value="FAC">FA Cup</option>
@@ -433,7 +434,7 @@ select, input[type="password"], input[type="number"], input[type="text"] { backg
 <div class="settings-section">
 <h3>🗄️ Gestione Dati</h3>
 <div class="settings-row">
-<button class="btn btn-secondary" onclick="exportAllData()"> Esporta</button>
+<button class="btn btn-secondary" onclick="exportAllData()">📤 Esporta</button>
 <button class="btn btn-import" onclick="document.getElementById('importFileInput').click()">📥 Importa</button>
 <input type="file" id="importFileInput" accept=".json" onchange="importData(event)" style="display:none;">
 <button class="btn btn-danger" onclick="clearAllData()">🗑️ Cancella</button>
@@ -441,7 +442,7 @@ select, input[type="password"], input[type="number"], input[type="text"] { backg
 <p style="color:#87ceeb;font-size:0.85em;margin-top:10px;">💡 <strong>Esporta</strong>: Salva tutti i dati in JSON<br>💡 <strong>Importa</strong>: Carica un file JSON</p>
 </div>
 <div class="settings-section">
-<h3> Debug</h3>
+<h3>🔧 Debug</h3>
 <button class="btn btn-secondary" onclick="debugReload()">🔄 Ricarica Dati</button>
 <button class="btn btn-danger" onclick="debugClearCache()">🗑️ Pulisci Cache</button>
 </div>
@@ -564,7 +565,7 @@ renderBetTypesGrid();
 renderLeagueFilterSidebar();
 console.log('✅ App pronta');
 } catch (error) {
-console.error(' Errore inizializzazione:', error);
+console.error('❌ Errore inizializzazione:', error);
 alert('Errore durante il caricamento dell\'app. Controlla la console.');
 }
 });
@@ -665,7 +666,7 @@ showNotification('✅ Chiave valida! Trovati ' + data.response.length + ' risult
 if (status) { status.textContent = '✅ Valida'; status.className = 'key-status saved'; }
 } else {
 showNotification('❌ Chiave non valida', 'error');
-if (status) { status.textContent = ' Non valida'; status.className = 'key-status not-saved'; }
+if (status) { status.textContent = '❌ Non valida'; status.className = 'key-status not-saved'; }
 }
 } catch (error) {
 showNotification('Errore: ' + error.message, 'error');
@@ -681,7 +682,7 @@ const gm = document.getElementById('groqModel');
 if (fd) localStorage.setItem('footballDataApiKey', fd.value);
 if (gk) localStorage.setItem('groqApiKey', gk.value);
 if (gm) localStorage.setItem('groqModel', gm.value);
-showNotification(' Tutte le impostazioni salvate!', 'success');
+showNotification('💾 Tutte le impostazioni salvate!', 'success');
 }
 
 function changeFontSize(size) {
@@ -782,52 +783,87 @@ const fontSize = size === 'detail' ? 28 : (size === 'card' ? 16 : 10);
 return '<div style="width:' + dim + 'px;height:' + dim + 'px;border-radius:50%;background:linear-gradient(135deg,var(--primary-color),#0066cc);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:bold;font-size:' + fontSize + 'px;border:2px solid #FFD700;">' + text + '</div>';
 }
 
-function createFlagBadge(icon, label, value, maxValue, isBomb) {
-const isTop = (value === maxValue && maxValue > 0);
-let cssClass = 'flag-badge ';
-if (isBomb) {
-cssClass += 'flag-bomb';
-} else if (isTop) {
-cssClass += 'flag-gold';
-} else {
-cssClass += 'flag-green';
+// NUOVA FUNZIONE: determina la flag con la % più alta (con tiebreaker)
+function getHighestFlagKey(stats) {
+    const flags = [
+        { key: 'dc12', value: stats.dc12, team: null },
+        { key: 'u45', value: stats.u45, team: null },
+        { key: 'o15', value: stats.o15, team: null },
+        { key: 'mgc13', value: stats.mgc13, team: 'home' },
+        { key: 'mgo24', value: stats.mgo24, team: 'away' },
+        { key: 'mgtot25', value: stats.mgtot25, team: null }
+    ];
+    
+    flags.sort((a, b) => {
+        if (b.value !== a.value) return b.value - a.value;
+        // Tiebreaker: differenza reti
+        const aDiff = a.team === 'home' ? (stats.homeDiff || 0) : (a.team === 'away' ? (stats.awayDiff || 0) : -999);
+        const bDiff = b.team === 'home' ? (stats.homeDiff || 0) : (b.team === 'away' ? (stats.awayDiff || 0) : -999);
+        if (bDiff !== aDiff) return bDiff - aDiff;
+        // Vantaggio casa
+        if (a.team === 'home' && b.team !== 'home') return -1;
+        if (b.team === 'home' && a.team !== 'home') return 1;
+        return 0;
+    });
+    
+    return flags[0].key;
 }
-const bombIcon = isBomb ? '<span class="flag-bomb-icon">💣</span>' : '';
-return '<div class="' + cssClass + '">' + bombIcon + icon + ' ' + label + ': ' + value + '%</div>';
+
+// NUOVA FUNZIONE: crea il badge flag con colori corretti
+function createFlagBadge(icon, label, value, isHighest) {
+    let cssClass = 'flag-badge ';
+    let bombIcon = '';
+    
+    if (value >= 90) {
+        cssClass += 'flag-bomb';
+        bombIcon = '<span class="flag-bomb-icon">💣</span>';
+    } else if (isHighest) {
+        cssClass += 'flag-gold';
+    } else if (value >= 75) {
+        cssClass += 'flag-green';
+    } else {
+        cssClass += 'flag-red';
+    }
+    
+    return '<div class="' + cssClass + '">' + bombIcon + icon + ' ' + label + ': ' + value + '%</div>';
 }
 
 function createFlagsHTML_Palinsesto(matchId) {
-const stats = matchStatsPercentages[matchId];
-if (!stats) return '';
-const mv = stats.maxValue;
-const row1 = '<div class="match-flags-row">' +
-createFlagBadge('🛡️', 'DC', stats.dc12, mv, stats.dc12 >= 90) +
-createFlagBadge('📉', 'U4.5', stats.u45, mv, stats.u45 >= 90) +
-createFlagBadge('⚽', 'O1.5', stats.o15, mv, stats.o15 >= 90) +
-'</div>';
-const row2 = '<div class="match-flags-row">' +
-createFlagBadge('', 'Casa 1-3', stats.mgc13, mv, stats.mgc13 >= 90) +
-createFlagBadge('⚽', 'Ospite 2-4', stats.mgo24, mv, stats.mgo24 >= 90) +
-createFlagBadge('🎯', 'Totale 2-5', stats.mgtot25, mv, stats.mgtot25 >= 90) +
-'</div>';
-return '<div class="match-flags-container">' + row1 + row2 + '</div>';
+    const stats = matchStatsPercentages[matchId];
+    if (!stats) return '';
+    
+    const highestKey = getHighestFlagKey(stats);
+    
+    const row1 = '<div class="match-flags-row">' +
+        createFlagBadge('🛡️', 'DC', stats.dc12, highestKey === 'dc12') +
+        createFlagBadge('📉', 'U4.5', stats.u45, highestKey === 'u45') +
+        createFlagBadge('⚽', 'O1.5', stats.o15, highestKey === 'o15') +
+        '</div>';
+    const row2 = '<div class="match-flags-row">' +
+        createFlagBadge('', 'Casa 1-3', stats.mgc13, highestKey === 'mgc13') +
+        createFlagBadge('⚽', 'Ospite 2-4', stats.mgo24, highestKey === 'mgo24') +
+        createFlagBadge('🎯', 'Totale 2-5', stats.mgtot25, highestKey === 'mgtot25') +
+        '</div>';
+    return '<div class="match-flags-container">' + row1 + row2 + '</div>';
 }
 
 function createFlagsHTML_Dettaglio(matchId) {
-const stats = matchStatsPercentages[matchId];
-if (!stats) return '';
-const mv = stats.maxValue;
-const row1 = '<div class="match-flags-row">' +
-createFlagBadge('🛡️', 'DC', stats.dc12, mv, stats.dc12 >= 90) +
-createFlagBadge('📉', 'U4.5', stats.u45, mv, stats.u45 >= 90) +
-createFlagBadge('⚽', 'O1.5', stats.o15, mv, stats.o15 >= 90) +
-'</div>';
-const row2 = '<div class="match-flags-row">' +
-createFlagBadge('', 'Casa 1-3', stats.mgc13, mv, stats.mgc13 >= 90) +
-createFlagBadge('⚽', 'Ospite 2-4', stats.mgo24, mv, stats.mgo24 >= 90) +
-createFlagBadge('🎯', 'Totale 2-5', stats.mgtot25, mv, stats.mgtot25 >= 90) +
-'</div>';
-return '<div class="match-flags-container" style="border:none; margin-top:15px; padding-top:15px;">' + row1 + row2 + '</div>';
+    const stats = matchStatsPercentages[matchId];
+    if (!stats) return '';
+    
+    const highestKey = getHighestFlagKey(stats);
+    
+    const row1 = '<div class="match-flags-row">' +
+        createFlagBadge('🛡️', 'DC', stats.dc12, highestKey === 'dc12') +
+        createFlagBadge('📉', 'U4.5', stats.u45, highestKey === 'u45') +
+        createFlagBadge('⚽', 'O1.5', stats.o15, highestKey === 'o15') +
+        '</div>';
+    const row2 = '<div class="match-flags-row">' +
+        createFlagBadge('', 'Casa 1-3', stats.mgc13, highestKey === 'mgc13') +
+        createFlagBadge('⚽', 'Ospite 2-4', stats.mgo24, highestKey === 'mgo24') +
+        createFlagBadge('🎯', 'Totale 2-5', stats.mgtot25, highestKey === 'mgtot25') +
+        '</div>';
+    return '<div class="match-flags-container" style="border:none; margin-top:15px; padding-top:15px;">' + row1 + row2 + '</div>';
 }
 
 function createMatchCard(match, isPlayed) {
@@ -894,12 +930,10 @@ xgDisplay = '<div class="xg-display">' + match.homeTeam + ' - xG: ' + stats.home
 flagsDetailHtml = createFlagsHTML_Dettaglio(match.id);
 }
 
-// PRIMA inserisco l'HTML nel DOM
-document.getElementById('matchDetailContent').innerHTML = '<div class="match-header-detail" style="--league-color: ' + lc + ';"><div class="match-header-top"><div class="match-header-title" style="color: ' + lc + ';">' + match.league + ' - Giornata: ' + rn + '</div><div class="match-header-time">⏰ ' + (match.time || 'N/D') + '</div></div><div style="text-align:center;color:#87ceeb;margin-bottom:10px;">📅 ' + match.date + '</div><div class="match-teams-display"><div class="team-display"><div class="team-goals-detail">⚽ Gol: ' + hg.fatti + ' F / ' + hg.subiti + ' S</div><div class="team-logo-container">' + hLogo + '</div><div class="team-name">' + match.homeTeam + '</div><div class="team-form-detail">' + createFormHTML(match.homeForm) + '</div><div style="margin-top:5px;font-size:0.85em;">' + createFormResults(match.homeTeam) + '</div><div style="margin-top:10px;">' + resultHtml + '</div></div><div class="vs-separator" style="color: ' + lc + '; display:flex; flex-direction:column; align-items:center; gap:10px;"><span>VS</span>' + xgDisplay + flagsDetailHtml + '</div><div class="team-display"><div class="team-goals-detail">⚽ Gol: ' + ag.fatti + ' F / ' + ag.subiti + ' S</div><div class="team-logo-container">' + aLogo + '</div><div class="team-name">' + match.awayTeam + '</div><div class="team-form-detail">' + createFormHTML(match.awayForm) + '</div><div style="margin-top:5px;font-size:0.85em;">' + createFormResults(match.awayTeam) + '</div><div style="margin-top:10px;">' + resultHtml + '</div></div></div></div><div class="stats-grid-detail"><div class="stats-panel" style="--league-color: ' + lc + ';"><div id="clickInfo" class="click-info" style="display:none;">1° click: <span id="firstClickInfo"></span> - clicca 2° per combo</div><div id="comboError" class="combo-error" style="display:none;">❌ Combo non valida!</div><div class="stats-section"><div class="stats-section-title" style="color: ' + lc + ';">Doppia Chance</div><div class="stats-row"><div class="stat-item" id="dc-1x" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'1X\',\'' + match.date + '\',\'dc-1x\',\'DC\')"><span class="label">1X</span><span class="value">-</span></div><div class="stat-item" id="dc-12" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'12\',\'' + match.date + '\',\'dc-12\',\'DC\')"><span class="label">12</span><span class="value">-</span></div><div class="stat-item" id="dc-x2" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'X2\',\'' + match.date + '\',\'dc-x2\',\'DC\')"><span class="label">X2</span><span class="value">-</span></div></div></div><div class="stats-section"><div class="stats-section-title" style="color: ' + lc + ';">Under - Over</div><div class="stats-row"><div class="stat-item" id="o-15" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'Over 1,5\',\'' + match.date + '\',\'o-15\',\'UNDER_OVER\')"><span class="label">Over 1,5</span><span class="value">-</span></div><div class="stat-item" id="o-25" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'Over 2,5\',\'' + match.date + '\',\'o-25\',\'UNDER_OVER\')"><span class="label">Over 2,5</span><span class="value">-</span></div><div class="stat-item" id="u-35" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'Under 3,5\',\'' + match.date + '\',\'u-35\',\'UNDER_OVER\')"><span class="label">Under 3,5</span><span class="value">-</span></div><div class="stat-item" id="u-45" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'Under 4,5\',\'' + match.date + '\',\'u-45\',\'UNDER_OVER\')"><span class="label">Under 4,5</span><span class="value">-</span></div></div></div><div class="stats-section"><div class="stats-section-title" style="color: ' + lc + ';">Multigol Casa - Ospite</div><div class="stats-row-6"><div class="stat-item" id="mh-01" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG Casa 0-1\',\'' + match.date + '\',\'mh-01\',\'MULTIGOL_CASA\')"><span class="label">Casa 0-1</span><span class="value">-</span></div><div class="stat-item" id="mh-13" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG Casa 1-3\',\'' + match.date + '\',\'mh-13\',\'MULTIGOL_CASA\')"><span class="label">Casa 1-3</span><span class="value">-</span></div><div class="stat-item" id="mh-24" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG Casa 2-4\',\'' + match.date + '\',\'mh-24\',\'MULTIGOL_CASA\')"><span class="label">Casa 2-4</span><span class="value">-</span></div><div class="stat-item" id="ma-01" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG Ospite 0-1\',\'' + match.date + '\',\'ma-01\',\'MULTIGOL_OSPITE\')"><span class="label">Ospite 0-1</span><span class="value">-</span></div><div class="stat-item" id="ma-13" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG Ospite 1-3\',\'' + match.date + '\',\'ma-13\',\'MULTIGOL_OSPITE\')"><span class="label">Ospite 1-3</span><span class="value">-</span></div><div class="stat-item" id="ma-24" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG Ospite 2-4\',\'' + match.date + '\',\'ma-24\',\'MULTIGOL_OSPITE\')"><span class="label">Ospite 2-4</span><span class="value">-</span></div></div></div><div class="stats-section"><div class="stats-section-title" style="color: ' + lc + ';">Multigol Totali</div><div class="stats-row"><div class="stat-item" id="mt-14" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG 1-4\',\'' + match.date + '\',\'mt-14\',\'MULTIGOL_TOTALE\')"><span class="label">1-4</span><span class="value">-</span></div><div class="stat-item" id="mt-25" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG 2-5\',\'' + match.date + '\',\'mt-25\',\'MULTIGOL_TOTALE\')"><span class="label">2-5</span><span class="value">-</span></div><div class="stat-item" id="oh-15" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'Over 1,5 Casa\',\'' + match.date + '\',\'oh-15\',\'MULTIGOL_TOTALE\')"><span class="label">O 1,5 Casa</span><span class="value">-</span></div><div class="stat-item" id="oa-15" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'Over 1,5 Ospite\',\'' + match.date + '\',\'oa-15\',\'MULTIGOL_TOTALE\')"><span class="label">O 1,5 Ospite</span><span class="value">-</span></div></div></div></div><div class="stats-panel"><div class="stats-section-title" style="color:' + lc + ';">📊 Classifica</div><div id="standingsContent" style="margin-top:15px;"></div></div></div><div class="h2h-section"><div class="stats-section-title" style="color:' + lc + ';">️ Head-to-Head (Ultimi Incontri)</div><div id="h2hContent"></div></div><div class="h2h-section"><div class="stats-section-title" style="color:' + lc + ';">🏥 Infortuni e Squalifiche</div><div id="injuriesContent"></div></div><div class="ai-panel" style="--league-color: ' + lc + ';"><div class="stats-section-title" style="color:' + lc + ';"> ANALISI AI (GROQ)</div><div class="ai-content" id="matchAiContent"><div style="text-align:center;color:#87ceeb;"><div style="font-size:32px;margin-bottom:10px;">⏳</div>Generazione...</div></div><div class="export-buttons"><button class="btn btn-success" onclick="exportMatchAIAsPNG()">📷 PNG</button><button class="btn" onclick="exportMatchAIAsText()"> Testo</button><button class="btn btn-secondary" onclick="shareMatchAITelegram()">✈️ Telegram</button><button class="btn btn-secondary" onclick="shareMatchAIWhatsApp()">💬 WhatsApp</button><button class="btn btn-secondary" onclick="shareMatchAIEmail()">📧 Email</button></div></div>';
+document.getElementById('matchDetailContent').innerHTML = '<div class="match-header-detail" style="--league-color: ' + lc + ';"><div class="match-header-top"><div class="match-header-title" style="color: ' + lc + ';">' + match.league + ' - Giornata: ' + rn + '</div><div class="match-header-time">⏰ ' + (match.time || 'N/D') + '</div></div><div style="text-align:center;color:#87ceeb;margin-bottom:10px;">📅 ' + match.date + '</div><div class="match-teams-display"><div class="team-display"><div class="team-goals-detail">⚽ Gol: ' + hg.fatti + ' F / ' + hg.subiti + ' S</div><div class="team-logo-container">' + hLogo + '</div><div class="team-name">' + match.homeTeam + '</div><div class="team-form-detail">' + createFormHTML(match.homeForm) + '</div><div style="margin-top:5px;font-size:0.85em;">' + createFormResults(match.homeTeam) + '</div><div style="margin-top:10px;">' + resultHtml + '</div></div><div class="vs-separator" style="color: ' + lc + '; display:flex; flex-direction:column; align-items:center; gap:10px;"><span>VS</span>' + xgDisplay + flagsDetailHtml + '</div><div class="team-display"><div class="team-goals-detail">⚽ Gol: ' + ag.fatti + ' F / ' + ag.subiti + ' S</div><div class="team-logo-container">' + aLogo + '</div><div class="team-name">' + match.awayTeam + '</div><div class="team-form-detail">' + createFormHTML(match.awayForm) + '</div><div style="margin-top:5px;font-size:0.85em;">' + createFormResults(match.awayTeam) + '</div><div style="margin-top:10px;">' + resultHtml + '</div></div></div></div><div class="stats-grid-detail"><div class="stats-panel" style="--league-color: ' + lc + ';"><div id="clickInfo" class="click-info" style="display:none;">1° click: <span id="firstClickInfo"></span> - clicca 2° per combo</div><div id="comboError" class="combo-error" style="display:none;">❌ Combo non valida!</div><div class="stats-section"><div class="stats-section-title" style="color: ' + lc + ';">Doppia Chance</div><div class="stats-row"><div class="stat-item" id="dc-1x" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'1X\',\'' + match.date + '\',\'dc-1x\',\'DC\')"><span class="label">1X</span><span class="value">-</span></div><div class="stat-item" id="dc-12" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'12\',\'' + match.date + '\',\'dc-12\',\'DC\')"><span class="label">12</span><span class="value">-</span></div><div class="stat-item" id="dc-x2" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'X2\',\'' + match.date + '\',\'dc-x2\',\'DC\')"><span class="label">X2</span><span class="value">-</span></div></div></div><div class="stats-section"><div class="stats-section-title" style="color: ' + lc + ';">Under - Over</div><div class="stats-row"><div class="stat-item" id="o-15" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'Over 1,5\',\'' + match.date + '\',\'o-15\',\'UNDER_OVER\')"><span class="label">Over 1,5</span><span class="value">-</span></div><div class="stat-item" id="o-25" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'Over 2,5\',\'' + match.date + '\',\'o-25\',\'UNDER_OVER\')"><span class="label">Over 2,5</span><span class="value">-</span></div><div class="stat-item" id="u-35" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'Under 3,5\',\'' + match.date + '\',\'u-35\',\'UNDER_OVER\')"><span class="label">Under 3,5</span><span class="value">-</span></div><div class="stat-item" id="u-45" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'Under 4,5\',\'' + match.date + '\',\'u-45\',\'UNDER_OVER\')"><span class="label">Under 4,5</span><span class="value">-</span></div></div></div><div class="stats-section"><div class="stats-section-title" style="color: ' + lc + ';">Multigol Casa - Ospite</div><div class="stats-row-6"><div class="stat-item" id="mh-01" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG Casa 0-1\',\'' + match.date + '\',\'mh-01\',\'MULTIGOL_CASA\')"><span class="label">Casa 0-1</span><span class="value">-</span></div><div class="stat-item" id="mh-13" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG Casa 1-3\',\'' + match.date + '\',\'mh-13\',\'MULTIGOL_CASA\')"><span class="label">Casa 1-3</span><span class="value">-</span></div><div class="stat-item" id="mh-24" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG Casa 2-4\',\'' + match.date + '\',\'mh-24\',\'MULTIGOL_CASA\')"><span class="label">Casa 2-4</span><span class="value">-</span></div><div class="stat-item" id="ma-01" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG Ospite 0-1\',\'' + match.date + '\',\'ma-01\',\'MULTIGOL_OSPITE\')"><span class="label">Ospite 0-1</span><span class="value">-</span></div><div class="stat-item" id="ma-13" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG Ospite 1-3\',\'' + match.date + '\',\'ma-13\',\'MULTIGOL_OSPITE\')"><span class="label">Ospite 1-3</span><span class="value">-</span></div><div class="stat-item" id="ma-24" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG Ospite 2-4\',\'' + match.date + '\',\'ma-24\',\'MULTIGOL_OSPITE\')"><span class="label">Ospite 2-4</span><span class="value">-</span></div></div></div><div class="stats-section"><div class="stats-section-title" style="color: ' + lc + ';">Multigol Totali</div><div class="stats-row"><div class="stat-item" id="mt-14" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG 1-4\',\'' + match.date + '\',\'mt-14\',\'MULTIGOL_TOTALE\')"><span class="label">1-4</span><span class="value">-</span></div><div class="stat-item" id="mt-25" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'MG 2-5\',\'' + match.date + '\',\'mt-25\',\'MULTIGOL_TOTALE\')"><span class="label">2-5</span><span class="value">-</span></div><div class="stat-item" id="oh-15" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'Over 1,5 Casa\',\'' + match.date + '\',\'oh-15\',\'MULTIGOL_TOTALE\')"><span class="label">O 1,5 Casa</span><span class="value">-</span></div><div class="stat-item" id="oa-15" onclick="handleBetClick(\'' + match.homeTeam + ' vs ' + match.awayTeam + '\',\'Over 1,5 Ospite\',\'' + match.date + '\',\'oa-15\',\'MULTIGOL_TOTALE\')"><span class="label">O 1,5 Ospite</span><span class="value">-</span></div></div></div></div><div class="stats-panel"><div class="stats-section-title" style="color:' + lc + ';">📊 Classifica</div><div id="standingsContent" style="margin-top:15px;"></div></div></div><div class="h2h-section"><div class="stats-section-title" style="color:' + lc + ';">⚔️ Head-to-Head (Ultimi Incontri)</div><div id="h2hContent"></div></div><div class="h2h-section"><div class="stats-section-title" style="color:' + lc + ';">🏥 Infortuni e Squalifiche</div><div id="injuriesContent"></div></div><div class="ai-panel" style="--league-color: ' + lc + ';"><div class="stats-section-title" style="color:' + lc + ';">🤖 ANALISI AI (GROQ)</div><div class="ai-content" id="matchAiContent"><div style="text-align:center;color:#87ceeb;"><div style="font-size:32px;margin-bottom:10px;">⏳</div>Generazione...</div></div><div class="export-buttons"><button class="btn btn-success" onclick="exportMatchAIAsPNG()">📷 PNG</button><button class="btn" onclick="exportMatchAIAsText()">📝 Testo</button><button class="btn btn-secondary" onclick="shareMatchAITelegram()">✈️ Telegram</button><button class="btn btn-secondary" onclick="shareMatchAIWhatsApp()">💬 WhatsApp</button><button class="btn btn-secondary" onclick="shareMatchAIEmail()">📧 Email</button></div></div>';
 
-// ORA che l'HTML è nel DOM, aggiorno TUTTI i valori delle percentuali
+// Aggiorno TUTTI i valori delle percentuali nel DOM
 if (stats) {
-    // Doppia Chance - TUTTI
     const dc1xEl = document.getElementById('dc-1x');
     const dc12El = document.getElementById('dc-12');
     const dcX2El = document.getElementById('dc-x2');
@@ -907,7 +941,6 @@ if (stats) {
     if (dc12El) dc12El.querySelector('.value').textContent = (stats.dc12 || 0) + '%';
     if (dcX2El) dcX2El.querySelector('.value').textContent = (stats.dcX2 || 0) + '%';
     
-    // Under/Over - TUTTI
     const o15El = document.getElementById('o-15');
     const o25El = document.getElementById('o-25');
     const u35El = document.getElementById('u-35');
@@ -917,7 +950,6 @@ if (stats) {
     if (u35El) u35El.querySelector('.value').textContent = (stats.u35 || 0) + '%';
     if (u45El) u45El.querySelector('.value').textContent = (stats.u45 || 0) + '%';
     
-    // Multigol Casa - TUTTI
     const mh01El = document.getElementById('mh-01');
     const mh13El = document.getElementById('mh-13');
     const mh24El = document.getElementById('mh-24');
@@ -925,7 +957,6 @@ if (stats) {
     if (mh13El) mh13El.querySelector('.value').textContent = (stats.mgc13 || 0) + '%';
     if (mh24El) mh24El.querySelector('.value').textContent = (stats.mgc24 || 0) + '%';
     
-    // Multigol Ospite - TUTTI
     const ma01El = document.getElementById('ma-01');
     const ma13El = document.getElementById('ma-13');
     const ma24El = document.getElementById('ma-24');
@@ -933,7 +964,6 @@ if (stats) {
     if (ma13El) ma13El.querySelector('.value').textContent = (stats.mgo13 || 0) + '%';
     if (ma24El) ma24El.querySelector('.value').textContent = (stats.mgo24 || 0) + '%';
     
-    // Multigol Totali - TUTTI
     const mt14El = document.getElementById('mt-14');
     const mt25El = document.getElementById('mt-25');
     const oh15El = document.getElementById('oh-15');
@@ -943,25 +973,40 @@ if (stats) {
     if (oh15El) oh15El.querySelector('.value').textContent = (stats.mgoh15 || 0) + '%';
     if (oa15El) oa15El.querySelector('.value').textContent = (stats.mgoa15 || 0) + '%';
     
-    // Evidenzia i valori più alti
-    const maxValue = stats.maxValue;
-    if (dc1xEl && stats.dc1x === maxValue && maxValue > 0) dc1xEl.classList.add('highlight');
-    if (dc12El && stats.dc12 === maxValue && maxValue > 0) dc12El.classList.add('highlight');
-    if (dcX2El && stats.dcX2 === maxValue && maxValue > 0) dcX2El.classList.add('highlight');
-    if (o15El && stats.o15 === maxValue && maxValue > 0) o15El.classList.add('highlight');
-    if (o25El && stats.o25 === maxValue && maxValue > 0) o25El.classList.add('highlight');
-    if (u35El && stats.u35 === maxValue && maxValue > 0) u35El.classList.add('highlight');
-    if (u45El && stats.u45 === maxValue && maxValue > 0) u45El.classList.add('highlight');
-    if (mh01El && stats.mgc01 === maxValue && maxValue > 0) mh01El.classList.add('highlight');
-    if (mh13El && stats.mgc13 === maxValue && maxValue > 0) mh13El.classList.add('highlight');
-    if (mh24El && stats.mgc24 === maxValue && maxValue > 0) mh24El.classList.add('highlight');
-    if (ma01El && stats.mgo01 === maxValue && maxValue > 0) ma01El.classList.add('highlight');
-    if (ma13El && stats.mgo13 === maxValue && maxValue > 0) ma13El.classList.add('highlight');
-    if (ma24El && stats.mgo24 === maxValue && maxValue > 0) ma24El.classList.add('highlight');
-    if (mt14El && stats.mgtot14 === maxValue && maxValue > 0) mt14El.classList.add('highlight');
-    if (mt25El && stats.mgtot25 === maxValue && maxValue > 0) mt25El.classList.add('highlight');
-    if (oh15El && stats.mgoh15 === maxValue && maxValue > 0) oh15El.classList.add('highlight');
-    if (oa15El && stats.mgoa15 === maxValue && maxValue > 0) oa15El.classList.add('highlight');
+    // Highlight con tiebreaker per le stat-item
+    const allStatItems = [
+        { el: dc1xEl, value: stats.dc1x, team: 'home' },
+        { el: dc12El, value: stats.dc12, team: null },
+        { el: dcX2El, value: stats.dcX2, team: 'away' },
+        { el: o15El, value: stats.o15, team: null },
+        { el: o25El, value: stats.o25, team: null },
+        { el: u35El, value: stats.u35, team: null },
+        { el: u45El, value: stats.u45, team: null },
+        { el: mh01El, value: stats.mgc01, team: 'home' },
+        { el: mh13El, value: stats.mgc13, team: 'home' },
+        { el: mh24El, value: stats.mgc24, team: 'home' },
+        { el: ma01El, value: stats.mgo01, team: 'away' },
+        { el: ma13El, value: stats.mgo13, team: 'away' },
+        { el: ma24El, value: stats.mgo24, team: 'away' },
+        { el: mt14El, value: stats.mgtot14, team: null },
+        { el: mt25El, value: stats.mgtot25, team: null },
+        { el: oh15El, value: stats.mgoh15, team: 'home' },
+        { el: oa15El, value: stats.mgoa15, team: 'away' }
+    ].filter(item => item.el !== null);
+    
+    allStatItems.sort((a, b) => {
+        if (b.value !== a.value) return b.value - a.value;
+        const aDiff = a.team === 'home' ? (stats.homeDiff || 0) : (a.team === 'away' ? (stats.awayDiff || 0) : -999);
+        const bDiff = b.team === 'home' ? (stats.homeDiff || 0) : (b.team === 'away' ? (stats.awayDiff || 0) : -999);
+        if (bDiff !== aDiff) return bDiff - aDiff;
+        if (a.team === 'home' && b.team !== 'home') return -1;
+        if (b.team === 'home' && a.team !== 'home') return 1;
+        return 0;
+    });
+    
+    if (allStatItems.length > 0 && allStatItems[0].value > 0) {
+        allStatItems[0].el.classList.add('highlight');
+    }
 }
 
 renderStandings(match.league, match.homeTeam, match.awayTeam, lc);
@@ -971,6 +1016,7 @@ loadOrGenerateAIAnalysis(match);
 switchTab('partita');
 }
 
+// CALCOLO STATISTICHE CORRETTO
 function computeMatchStats(match) {
 const leagueName = match.league;
 const homeTeam = match.homeTeam;
@@ -999,35 +1045,47 @@ o15: 0, o25: 0, u35: 0, u45: 0,
 mgc01: 0, mgc13: 0, mgc24: 0,
 mgo01: 0, mgo13: 0, mgo24: 0,
 mgtot14: 0, mgtot25: 0, mgoh15: 0, mgoa15: 0,
-maxValue: 0, homeXG: 0, awayXG: 0
+maxValue: 0, homeXG: 0, awayXG: 0, homeDiff: 0, awayDiff: 0
 };
 return;
 }
 
-let dc1xPoints = 0, dc12Points = 0, dcX2Points = 0;
-let homeDraws = 0, awayDraws = 0;
+// CALCOLO DOPPIA CHANCE CORRETTO
+let dc1xCount = 0, dc12Count = 0, dcX2Count = 0;
 
+// Per 1X: conta partite della home dove NON ha perso (vinto o pareggiato)
+// Per 12: conta partite (totali) che NON sono finite in pareggio
 homeTeamMatches.forEach(m => {
 const isHome = m.homeTeam === homeTeam;
 const goalsFor = isHome ? m.homeGoals : m.awayGoals;
 const goalsAgainst = isHome ? m.awayGoals : m.homeGoals;
-if (goalsFor > goalsAgainst) { dc1xPoints += 100; dc12Points += 100; }
-else if (goalsFor === goalsAgainst) { dc1xPoints += 50; homeDraws++; }
-else { dc1xPoints += 100; dc12Points += 100; }
+if (goalsFor > goalsAgainst) { dc1xCount++; dc12Count++; } // vittoria home: 1X ok, 12 ok
+else if (goalsFor === goalsAgainst) { dc1xCount++; } // pareggio: 1X ok, 12 no
+else { dc12Count++; } // sconfitta home: 1X no, 12 ok (c'è vincitore)
 });
 
+// Per X2: conta partite della away dove NON ha perso (vinto o pareggiato)
 awayTeamMatches.forEach(m => {
-const isHome = m.homeTeam === awayTeam;
-const goalsFor = isHome ? m.homeGoals : m.awayGoals;
-const goalsAgainst = isHome ? m.awayGoals : m.homeGoals;
-if (goalsFor > goalsAgainst) { dcX2Points += 100; dc12Points += 100; }
-else if (goalsFor === goalsAgainst) { dcX2Points += 50; awayDraws++; }
-else { dcX2Points += 100; dc12Points += 100; }
+const isAwayHome = m.homeTeam === awayTeam;
+const goalsFor = isAwayHome ? m.homeGoals : m.awayGoals;
+const goalsAgainst = isAwayHome ? m.awayGoals : m.homeGoals;
+if (goalsFor > goalsAgainst) { dcX2Count++; dc12Count++; } // vittoria away: X2 ok, 12 ok
+else if (goalsFor === goalsAgainst) { dcX2Count++; } // pareggio: X2 ok, 12 no
+else { dc12Count++; } // sconfitta away: X2 no, 12 ok
 });
 
-const dc1x = homeMatchesCount > 0 ? Math.round((dc1xPoints / homeMatchesCount / 100) * 100) : 0;
-const dc12 = totalMatches > 0 ? Math.round(((homeDraws + awayDraws) / totalMatches) * 100) : 0;
-const dcX2 = awayMatchesCount > 0 ? Math.round((dcX2Points / awayMatchesCount / 100) * 100) : 0;
+const dc1x = homeMatchesCount > 0 ? Math.round((dc1xCount / homeMatchesCount) * 100) : 0;
+const dc12 = totalMatches > 0 ? Math.round((dc12Count / totalMatches) * 100) : 0;
+const dcX2 = awayMatchesCount > 0 ? Math.round((dcX2Count / awayMatchesCount) * 100) : 0;
+
+// DIFFERENZA RETI (per tiebreaker)
+const homeGoalsFor = homeTeamMatches.reduce((sum, m) => sum + (m.homeTeam === homeTeam ? m.homeGoals : m.awayGoals), 0);
+const homeGoalsAgainst = homeTeamMatches.reduce((sum, m) => sum + (m.homeTeam === homeTeam ? m.awayGoals : m.homeGoals), 0);
+const homeDiff = homeGoalsFor - homeGoalsAgainst;
+
+const awayGoalsFor = awayTeamMatches.reduce((sum, m) => sum + (m.homeTeam === awayTeam ? m.homeGoals : m.awayGoals), 0);
+const awayGoalsAgainst = awayTeamMatches.reduce((sum, m) => sum + (m.homeTeam === awayTeam ? m.awayGoals : m.homeGoals), 0);
+const awayDiff = awayGoalsFor - awayGoalsAgainst;
 
 const allMatchesCombined = [...homeTeamMatches, ...awayTeamMatches];
 let over15 = 0, over25 = 0, under35 = 0, under45 = 0;
@@ -1105,25 +1163,20 @@ if (awayTeamGoalsInMatch >= 2) oa15++;
 const oh15P = homeMatchesCount > 0 ? Math.round((oh15 / homeMatchesCount) * 100) : 0;
 const oa15P = awayMatchesCount > 0 ? Math.round((oa15 / awayMatchesCount) * 100) : 0;
 
-const homeXG = homeMatchesCount > 0 ? Math.round((homeTeamMatches.reduce((sum, m) => sum + (m.homeTeam === homeTeam ? m.homeGoals : m.awayGoals), 0) / homeMatchesCount) * 100) : 0;
-const awayXG = awayMatchesCount > 0 ? Math.round((awayTeamMatches.reduce((sum, m) => sum + (m.homeTeam === awayTeam ? m.homeGoals : m.awayGoals), 0) / awayMatchesCount) * 100) : 0;
+const homeXG = homeMatchesCount > 0 ? Math.round((homeGoalsFor / homeMatchesCount) * 100) : 0;
+const awayXG = awayMatchesCount > 0 ? Math.round((awayGoalsFor / awayMatchesCount) * 100) : 0;
 
 const allFlagValues = [dc1x, dc12, dcX2, o15, o25, u35, u45, mh01P, mh13P, mh24P, ma01P, ma13P, ma24P, mt14P, mt25P, oh15P, oa15P];
 const maxValue = Math.max(...allFlagValues);
 
 matchStatsPercentages[match.id] = {
-// Doppia Chance
 dc1x: dc1x, dc12: dc12, dcX2: dcX2,
-// Under/Over
 o15: o15, o25: o25, u35: u35, u45: u45,
-// Multigol Casa
 mgc01: mh01P, mgc13: mh13P, mgc24: mh24P,
-// Multigol Ospite
 mgo01: ma01P, mgo13: ma13P, mgo24: ma24P,
-// Multigol Totali
 mgtot14: mt14P, mgtot25: mt25P, mgoh15: oh15P, mgoa15: oa15P,
-// Altro
-maxValue: maxValue, homeXG: homeXG, awayXG: awayXG
+maxValue: maxValue, homeXG: homeXG, awayXG: awayXG,
+homeDiff: homeDiff, awayDiff: awayDiff
 };
 }
 
@@ -1376,7 +1429,7 @@ c.innerHTML = schedinaBets.map(b =>
 
 function exportSchedinaToText() {
 if (schedinaBets.length === 0) return;
-let text = " SCHEDINA GESSSAI-PRO\n";
+let text = "🎲 SCHEDINA GESSSAI-PRO\n";
 schedinaBets.forEach(b => {
 text += "• " + b.matchName + "\nGiocata: " + b.betType + "\n";
 });
@@ -1587,7 +1640,7 @@ if (!c) return;
 let html = '';
 if (leagueOrder.length > 0) {
 html += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;"><span style="color:#87ceeb;">Campionati salvati</span><button class="btn btn-danger" onclick="clearLeagueOrder()" style="padding:5px 10px;font-size:12px;">🗑️ Svuota lista</button></div>';
-html += leagueOrder.map((l, i) => '<div class="league-order-item" style="--league-color: ' + getLeagueColor(l) + ';"><span style="flex:1;"> ' + l + '</span><div class="league-order-buttons"><button class="league-order-btn" onclick="removeFromOrder(' + i + ')" title="Rimuovi dalla lista" style="background:#dc3545;">✕</button><button class="league-order-btn" onclick="moveLeagueUp(' + i + ')" ' + (i === 0 ? 'disabled' : '') + '>↑</button><button class="league-order-btn" onclick="moveLeagueDown(' + i + ')" ' + (i === leagueOrder.length - 1 ? 'disabled' : '') + '>↓</button></div></div>').join('');
+html += leagueOrder.map((l, i) => '<div class="league-order-item" style="--league-color: ' + getLeagueColor(l) + ';"><span style="flex:1;">⚽ ' + l + '</span><div class="league-order-buttons"><button class="league-order-btn" onclick="removeFromOrder(' + i + ')" title="Rimuovi dalla lista" style="background:#dc3545;">✕</button><button class="league-order-btn" onclick="moveLeagueUp(' + i + ')" ' + (i === 0 ? 'disabled' : '') + '>↑</button><button class="league-order-btn" onclick="moveLeagueDown(' + i + ')" ' + (i === leagueOrder.length - 1 ? 'disabled' : '') + '>↓</button></div></div>').join('');
 } else { html = '<div style="text-align:center;padding:20px;color:#87ceeb;">Nessun campionato</div>'; }
 c.innerHTML = html;
 }
