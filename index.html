@@ -486,7 +486,6 @@ const VALID_COMBOS = [
 
 const CUP_KEYWORDS = ['Cup','Coppa','Champions League','Europa League','Coppa Italia','Mondiali','Europei','National League','World Cup','FA Cup','EFL Cup','Conference League'];
 
-// === FUNZIONE DI CARICAMENTO ROBUSTA ===
 function loadFromStorage() {
 try {
 console.log('🔄 Caricamento dati da localStorage...');
@@ -516,7 +515,6 @@ renderSavedLeagues();
 renderLeagueOrder();
 }
 
-// === FUNZIONI DEBUG ===
 function debugReload() {
 console.log('🔄 Ricaricamento forzato dati...');
 loadFromStorage();
@@ -547,7 +545,6 @@ setTimeout(() => location.reload(), 1000);
 }
 }
 
-// === INIZIALIZZAZIONE MIGLIORATA ===
 document.addEventListener('DOMContentLoaded', () => {
 console.log('🚀 App avviata');
 try {
@@ -1536,6 +1533,12 @@ document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('activ
 const i = ['palinsesto', 'partita', 'storico', 'schedina', 'impostazioni'].indexOf(t);
 if (i >= 0) document.querySelectorAll('.tab-btn')[i].classList.add('active');
 document.getElementById('tab-' + t).classList.add('active');
+
+// FIX per lo storico
+if (t === 'storico') {
+renderStorico();
+}
+
 if (t === 'schedina') {
 renderLeagueFilterSidebar();
 renderBetTypesGrid();
@@ -1589,8 +1592,13 @@ const l = document.getElementById('leagueSelectStorico').value;
 let m = allMatches.filter(x => x.status === 'giocata');
 if (l !== 'all') m = m.filter(x => x.league === l);
 m.sort((a, b) => parseDateForSort(b.date) - parseDateForSort(a.date));
+
 const c = document.getElementById('matchesStorico');
-if (m.length === 0) { c.innerHTML = '<div style="text-align:center;padding:40px;color:#87ceeb;">Nessuna partita</div>'; return; }
+
+// FIX CSS per la griglia dello storico
+c.className = 'matches-grid';
+
+if (m.length === 0) { c.innerHTML = '<div style="text-align:center;padding:40px;color:#87ceeb;grid-column:1/-1;">Nessuna partita</div>'; return; }
 c.innerHTML = m.map(x => createMatchCard(x, true)).join('');
 }
 
