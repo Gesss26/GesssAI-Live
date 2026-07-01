@@ -1,3 +1,7 @@
 Per far partire la webapp bisogna aprire Visual Studio Code.
 aprire il file GesssAI-Live.html o index.html.
 con il tasto destro clikki su "Open with LIVE SERVER"
+
+cd C:\Scaricati\Webapp
+venv\Scripts\activate
+python campionati.py

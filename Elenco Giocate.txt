@@ -1,0 +1,59 @@
+comportati da programmatore esperto e crea una webapp per fare in modo di prendere le partite da sofascore con "Sofascore scraper Pro" nella quale ho una key.
+Il tuo host è sportapi7.p.rapidapi.com e il percorso è /api/v1/sport/football/scheduled-events/2026-06-24.
+abbiamo fatto già delle prove e funziona.
+mi creai un menù a tendina per la selezione del campionato.
+quindi mi dovresti scaricare il palinsesto delle partite dei campionati che ti elenco,cosi risparmiamo chiamate e le salvi in locale per 4 giorni,poi si faranno le chiamate delle giornati correnti e a loro volta quando scadono i 4 giorni,li aggiungi al file in locale,avendo cosi sempre i dati storici e fare i calcoli con precisione.nelle tab delle partite metterai una flag in verde per le partite in live e mi metterai in rosso le partite terminate e in giallo quelle ancora da iniziare e mi aggiornerai con una frequenza di 1 secondo il risultato della partita.
+Lista Campionati:
+Italia serie (A),(B), i 3 gironi della (C)
+Francia (A)
+Spagna (A)
+Germania (A)
+Inghilterra (A)
+Svezia (A)
+Finlandia (A)
+Norvegia (A)
+Islanda (A)
+Danimarca (A)
+Giappone (A)
+Europei
+Champions League
+Europa League
+Conference League
+Coppa Italia
+Coppa del mondo
+---------------
+Tipologia di giocate per ogni consiglio:
+Consiglio 1: Fissa/DC: "1","X","2","1X","X2","12"
+Consiglio 2: Under/over: "Over 1,5","Over 2,5","Under 3,5","Under 4,5"
+Consiglio 3: (Range Multigol) Multigol Casa "0-1","1-3","2-4"
+Consiglio 4: (Range Multigol) Multigol Ospite "0-1","1-3","2-4"
+Consiglio 5: Multigol AI Dinamico: "Multigol 1-4","Multigol 2-5","Multigol Over 1,5 Casa","Multigol Over 1,5 Ospite"
+
+GRAFICA DI DISPOSIZIONE CONSIGLI:
+
+[Nome Campionato - Giornata: (3)]
+[Data e ora: (gg/mm/aaaa) - (hh:mm)
+
+---------------------------------------------------------------  --------------------------------------
+|                       [Doppia Chance]                       |  |              [Classifica]          |
+|[1X: X%]              [12: X%]               [X2: X%]        |  |                                    |
+|                       [Under - Over]                        |  |                                    |
+|[Over 1,5: X%]|[Over 2,5: X%]|[Under 3,5: X%]|[Under 4,5; X%]|  |                                    |
+| [Multigol Casa]           |           [Multigol Ospite]     |  |                                    |
+|[0-1: X%][1-3: X%][2-4: X%]|[0-1: X%][1-3: X%][2-4: X%]      |  |                                    |
+|                       Multigol Totali                       |  |                                    |
+|[1-4: X%][2-5: X%][Over 1,5 Casa: X%][Over 1,5 Ospiti; X%]   |  |                                    |
+---------------------------------------------------------------  --------------------------------------
+---------------------------------------------------------------
+|                        [ANALISI AI] (GROQ)                  |
+|                                                             |
+|                                                             | 
+|                                                             |
+|                                                             |
+|                                                             |
+|                                                             |
+|                                                             |
+|                                                             |
+|                                                             |
+|                                                             |
+---------------------------------------------------------------
